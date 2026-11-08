@@ -1,0 +1,13 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+
+[[redirects]]
+  from = "/api/create-pix"
+  to = "/.netlify/functions/create-pix"
+  status = 200
+
+[[redirects]]
+  from = "/api/meta-capi"
+  to = "/.netlify/functions/meta-capi"
+  status = 200

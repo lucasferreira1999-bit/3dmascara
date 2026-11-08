@@ -16,3 +16,4 @@ root_vars.css
 runParams.json
 *.js
 !server.js
+!netlify/**

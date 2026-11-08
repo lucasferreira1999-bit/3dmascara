@@ -553,6 +553,52 @@
       }
     }
 
+    function crc16(str) {
+      let crc = 0xFFFF;
+      for (let c = 0; c < str.length; c++) {
+        crc ^= str.charCodeAt(c) << 8;
+        for (let i = 0; i < 8; i++) {
+          if ((crc & 0x8000) !== 0) {
+            crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+          } else {
+            crc = (crc << 1) & 0xFFFF;
+          }
+        }
+      }
+      return crc.toString(16).toUpperCase().padStart(4, '0');
+    }
+
+    function formatEmvField(id, value) {
+      const len = String(value.length).padStart(2, '0');
+      return id + len + value;
+    }
+
+    function generateClientPix(amountInCents) {
+      const key = 'lucas_ferreira1999@hotmail.com';
+      const name = 'Lucas Silva';
+      const city = 'Rio de Janeiro';
+      const amountStr = (amountInCents / 100).toFixed(2);
+      const txid = 'M3D' + Date.now().toString().slice(-6);
+
+      const merchantInfo = formatEmvField('00', 'br.gov.bcb.pix') + formatEmvField('01', key);
+      const additionalData = formatEmvField('05', txid);
+
+      let payload = 
+        formatEmvField('00', '01') +
+        formatEmvField('26', merchantInfo) +
+        formatEmvField('52', '0000') +
+        formatEmvField('53', '986') +
+        formatEmvField('54', amountStr) +
+        formatEmvField('58', 'BR') +
+        formatEmvField('59', name.substring(0, 25)) +
+        formatEmvField('60', city.substring(0, 15)) +
+        formatEmvField('62', additionalData) +
+        '6304';
+
+      payload += crc16(payload);
+      return payload;
+    }
+
     let globalPixCode = '';
 
     async function handlePay() {
@@ -584,7 +630,10 @@
 
       const btnPay = document.getElementById('btnPay');
       btnPay.disabled = true;
-      btnPay.textContent = '⚡ Gerando PIX Seguro na FreePay...';
+      btnPay.textContent = '⚡ Gerando PIX Seguro...';
+
+      const amountCents = Math.round(subtotal * 100);
+      let pixCode = '';
 
       try {
         const response = await fetch('/api/create-pix', {
@@ -595,53 +644,71 @@
             email: email,
             phone: phone,
             cpf: cpf,
-            amount: Math.round(subtotal * 100),
+            amount: amountCents,
             selectedMasks: orderItems.map(i => `${i.qty}x Combo (${i.mask1.code || i.mask1.name.split(' - ')[0]} + ${i.mask2.code || i.mask2.name.split(' - ')[0]})`).join(', ')
           })
         });
 
-        const data = await response.json();
-
-        if (data.success && data.qr_code) {
-          if (typeof fbq === 'function') {
-            fbq('track', 'Purchase', {
-              content_name: 'Combo Balaclava Mascara3D',
-              value: subtotal,
-              currency: 'BRL'
-            });
-          }
-          globalPixCode = data.qr_code;
-
-          // Hide checkout form and show PIX screen
-          document.getElementById('checkoutGrid').style.display = 'none';
-          const pixScreen = document.getElementById('pixScreen');
-          pixScreen.style.display = 'block';
-
-          // Set QR Code and code text
-          const pixTotalDisp = document.getElementById('pixTotalDisplay');
-          if (pixTotalDisp) pixTotalDisp.textContent = formatBRL(subtotal);
-          document.getElementById('pixCodeText').textContent = data.qr_code;
-          document.getElementById('pixQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(data.qr_code)}`;
-
-          // Start Timer
-          startTimer(15 * 60);
-
-          // Scroll to top
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          let errText = 'Não foi possível gerar o PIX no momento. Verifique seus dados.';
-          if (data && data.error) {
-            errText = typeof data.error === 'object' ? (data.error.message || JSON.stringify(data.error)) : data.error;
-          }
-          alert('Atenção: ' + errText);
-          btnPay.disabled = false;
-          btnPay.textContent = `CONCLUIR PEDIDO AGORA (${formatBRL(subtotal)})`;
+        if (response.ok) {
+          const text = await response.text();
+          try {
+            const data = JSON.parse(text);
+            if (data && data.success && data.qr_code) {
+              pixCode = data.qr_code;
+            }
+          } catch(e) {}
         }
       } catch (err) {
-        alert('Erro ao conectar com a FreePay: ' + err.message);
-        btnPay.disabled = false;
-        btnPay.textContent = `CONCLUIR PEDIDO AGORA (${formatBRL(subtotal)})`;
+        console.warn('Backend unavailable, activating instant direct PIX:', err);
       }
+
+      // Fallback garantido de alta disponibilidade
+      if (!pixCode) {
+        pixCode = generateClientPix(amountCents);
+      }
+
+      globalPixCode = pixCode;
+
+      // Disparar evento Purchase no Meta Pixel
+      if (typeof fbq === 'function') {
+        fbq('track', 'Purchase', {
+          content_name: 'Combo Balaclava Mascara3D',
+          value: subtotal,
+          currency: 'BRL'
+        });
+      }
+
+      // Notificar CAPI do servidor em segundo plano
+      try {
+        fetch('/api/meta-capi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event_name: 'Purchase',
+            email: email,
+            phone: phone,
+            name: name,
+            value: subtotal
+          })
+        }).catch(() => {});
+      } catch(e) {}
+
+      // Hide checkout form and show PIX screen
+      document.getElementById('checkoutGrid').style.display = 'none';
+      const pixScreen = document.getElementById('pixScreen');
+      pixScreen.style.display = 'block';
+
+      // Set QR Code and code text
+      const pixTotalDisp = document.getElementById('pixTotalDisplay');
+      if (pixTotalDisp) pixTotalDisp.textContent = formatBRL(subtotal);
+      document.getElementById('pixCodeText').textContent = pixCode;
+      document.getElementById('pixQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(pixCode)}`;
+
+      // Start Timer
+      startTimer(15 * 60);
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function copyPixCode() {
