@@ -189,37 +189,19 @@ function createFreePayPix(orderData, callback) {
           });
         }
         
-        console.warn('FreePay Gateway instável (Erro de adquirente). Ativando PIX Oficial Mascara3D.');
-        const fallbackQr = generateDirectPix(cleanAmount);
-        return callback(null, {
-          success: true,
-          id: 'PIX-' + Date.now(),
-          amount: cleanAmount,
-          qr_code: fallbackQr,
-          expiration_date: new Date(Date.now() + 15 * 60000).toISOString()
-        });
+        let errMsg = 'Erro na Gateway FreePay';
+        if (json.error_messages && json.error_messages.length) {
+          errMsg = json.error_messages[0].message || JSON.stringify(json.error_messages[0]);
+        }
+        return callback(new Error(errMsg));
       } catch (err) {
-        const fallbackQr = generateDirectPix(cleanAmount);
-        return callback(null, {
-          success: true,
-          id: 'PIX-' + Date.now(),
-          amount: cleanAmount,
-          qr_code: fallbackQr,
-          expiration_date: new Date(Date.now() + 15 * 60000).toISOString()
-        });
+        return callback(err);
       }
     });
   });
 
   req.on('error', (err) => {
-    const fallbackQr = generateDirectPix(cleanAmount);
-    return callback(null, {
-      success: true,
-      id: 'PIX-' + Date.now(),
-      amount: cleanAmount,
-      qr_code: fallbackQr,
-      expiration_date: new Date(Date.now() + 15 * 60000).toISOString()
-    });
+    return callback(err);
   });
   req.write(requestBody);
   req.end();

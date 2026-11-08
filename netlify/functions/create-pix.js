@@ -11,52 +11,6 @@ const META_PIXEL_ID = process.env.META_PIXEL_ID || '738539432587340';
 const META_ACCESS_TOKEN_B64 = 'RUFBVEdJaDh1SGtRQlN6a05YNXVpemJvOWhLNUdONGxRcnhmeEVObVZDWVFRZFpDdVpCS0VPZzE2TXpaQ1hiOGE4QXdIdHlIUHlJSjYwdkpybGJZVm84OWdMVzB2YlhwS0pHUEFueWlEOUhJeWtFRHg3SlBXMWR1WUIzbU54dGc2M0RnQnplT1lHUm55U2RLMFpDaVpCaXlBeFhGaWVkWkNMM2dRMHFyWEw1dDlDQlpBM3lkVHJpdURZQzdpN1doZHdaRFpE';
 const META_ACCESS_TOKEN = process.env.META_ACCESS_TOKEN || Buffer.from(META_ACCESS_TOKEN_B64, 'base64').toString('utf8');
 
-function crc16(str) {
-  let crc = 0xFFFF;
-  for (let c = 0; c < str.length; c++) {
-    crc ^= str.charCodeAt(c) << 8;
-    for (let i = 0; i < 8; i++) {
-      if ((crc & 0x8000) !== 0) {
-        crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
-      } else {
-        crc = (crc << 1) & 0xFFFF;
-      }
-    }
-  }
-  return crc.toString(16).toUpperCase().padStart(4, '0');
-}
-
-function formatEmvField(id, value) {
-  const len = String(value.length).padStart(2, '0');
-  return `${id}${len}${value}`;
-}
-
-function generateDirectPix(amountInCents) {
-  const key = 'lucas_ferreira1999@hotmail.com';
-  const name = 'Lucas Silva';
-  const city = 'Rio de Janeiro';
-  const amountStr = (amountInCents / 100).toFixed(2);
-  const txid = 'M3D' + Date.now().toString().slice(-6);
-
-  const merchantInfo = formatEmvField('00', 'br.gov.bcb.pix') + formatEmvField('01', key);
-  const additionalData = formatEmvField('05', txid);
-
-  let payload = 
-    formatEmvField('00', '01') +
-    formatEmvField('26', merchantInfo) +
-    formatEmvField('52', '0000') +
-    formatEmvField('53', '986') +
-    formatEmvField('54', amountStr) +
-    formatEmvField('58', 'BR') +
-    formatEmvField('59', name.substring(0, 25)) +
-    formatEmvField('60', city.substring(0, 15)) +
-    formatEmvField('62', additionalData) +
-    '6304';
-
-  payload += crc16(payload);
-  return payload;
-}
-
 function hashMeta(val) {
   if (!val) return undefined;
   const clean = String(val).trim().toLowerCase();
@@ -120,10 +74,13 @@ exports.handler = async function(event, context) {
   try {
     const orderData = JSON.parse(event.body || '{}');
     const cleanAmount = parseInt(orderData.amount || 2990, 10);
+    const cleanCpf = (orderData.cpf || '').replace(/\D/g, '') || '11144477735';
+    const rawPhone = (orderData.phone || '').replace(/\D/g, '');
+    const cleanPhone = rawPhone.length >= 10 ? (rawPhone.startsWith('55') ? '+' + rawPhone : '+55' + rawPhone) : '+5511999998888';
     const clientIp = (event.headers['x-forwarded-for'] || event.headers['client-ip'] || '127.0.0.1').split(',')[0].trim();
     const userAgent = event.headers['user-agent'] || 'Mozilla/5.0';
 
-    // Trigger Meta Conversions API
+    // Disparar Meta Conversions API (CAPI)
     sendMetaCapi('Purchase', {
       ip: clientIp,
       userAgent: userAgent,
@@ -138,27 +95,108 @@ exports.handler = async function(event, context) {
       content_name: 'Combo 2x Balaclava Mascara3D'
     });
 
-    const directPix = generateDirectPix(cleanAmount);
+    // Enviar requisição real para a FreePay Brasil API
+    const freePayPayload = JSON.stringify({
+      amount: cleanAmount,
+      payment_method: 'pix',
+      postback_url: 'https://3dmascara.netlify.app/api/webhook',
+      customer: {
+        name: orderData.name || 'Cliente Mascara3D',
+        email: orderData.email || 'contato@mascara3d.com.br',
+        phone: cleanPhone,
+        document: {
+          type: 'cpf',
+          number: cleanCpf
+        }
+      },
+      items: [
+        {
+          title: 'Combo 2x Mascara 3D Realista',
+          unit_price: cleanAmount,
+          quantity: 1,
+          tangible: true
+        }
+      ],
+      pix: {
+        expires_in_days: 1
+      },
+      metadata: {
+        provider_name: 'Mascara3D',
+        order_id: 'ORDER-' + Date.now()
+      },
+      ip: clientIp
+    });
+
+    const freePayResponse = await new Promise((resolve, reject) => {
+      const fpReq = https.request('https://api.freepaybrasil.com/v1/payment-transaction/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': FREEPAY_AUTH,
+          'Content-Length': Buffer.byteLength(freePayPayload)
+        }
+      }, res => {
+        let respData = '';
+        res.on('data', d => respData += d);
+        res.on('end', () => resolve({ statusCode: res.statusCode, body: respData }));
+      });
+
+      fpReq.on('error', err => reject(err));
+      fpReq.write(freePayPayload);
+      fpReq.end();
+    });
+
+    let json = {};
+    try {
+      json = JSON.parse(freePayResponse.body);
+    } catch (e) {
+      json = { raw: freePayResponse.body };
+    }
+
+    // Se a FreePay gerou a transação com sucesso:
+    if (json.success && json.data && json.data.pix) {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          gateway: 'freepay',
+          id: json.data.id,
+          amount: json.data.amount,
+          qr_code: json.data.pix.qr_code,
+          qr_code_url: json.data.pix.url || `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(json.data.pix.qr_code)}`,
+          expiration_date: json.data.pix.expiration_date
+        })
+      };
+    }
+
+    // Se a FreePay retornou erro de adquirente ou validação:
+    let errorDetail = 'Erro ao processar na FreePay';
+    if (json.error_messages && json.error_messages.length) {
+      errorDetail = json.error_messages[0].message || JSON.stringify(json.error_messages[0]);
+    } else if (json.errors) {
+      errorDetail = JSON.stringify(json.errors);
+    }
 
     return {
-      statusCode: 200,
+      statusCode: 400,
       headers,
       body: JSON.stringify({
-        success: true,
-        id: 'pix_' + Date.now(),
-        qr_code: directPix,
-        qr_code_url: `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(directPix)}`
+        success: false,
+        gateway: 'freepay',
+        error: errorDetail,
+        raw: json
       })
     };
+
   } catch (err) {
-    const fallbackPix = generateDirectPix(2990);
     return {
-      statusCode: 200,
+      statusCode: 500,
       headers,
       body: JSON.stringify({
-        success: true,
-        id: 'pix_' + Date.now(),
-        qr_code: fallbackPix
+        success: false,
+        error: err.message
       })
     };
   }

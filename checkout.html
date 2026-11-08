@@ -623,17 +623,16 @@
         return;
       }
       if (!cpf || cpf.replace(/\D/g, '').length !== 11) {
-        alert('Por favor, informe um CPF válido com 11 dígitos para geração do PIX.');
+        alert('Por favor, informe um CPF válido com 11 dígitos para emissão do PIX.');
         document.getElementById('buyerCpf').focus();
         return;
       }
 
       const btnPay = document.getElementById('btnPay');
       btnPay.disabled = true;
-      btnPay.textContent = '⚡ Gerando PIX Seguro...';
+      btnPay.textContent = '⚡ Conectando à Gateway FreePay...';
 
       const amountCents = Math.round(subtotal * 100);
-      let pixCode = '';
 
       try {
         const response = await fetch('/api/create-pix', {
@@ -649,66 +648,54 @@
           })
         });
 
-        if (response.ok) {
-          const text = await response.text();
-          try {
-            const data = JSON.parse(text);
-            if (data && data.success && data.qr_code) {
-              pixCode = data.qr_code;
-            }
-          } catch(e) {}
+        const data = await response.json();
+
+        if (data.success && data.qr_code) {
+          globalPixCode = data.qr_code;
+
+          // Disparar evento Purchase no Meta Pixel
+          if (typeof fbq === 'function') {
+            fbq('track', 'Purchase', {
+              content_name: 'Combo Balaclava Mascara3D',
+              value: subtotal,
+              currency: 'BRL'
+            });
+          }
+
+          // Hide checkout form and show PIX screen
+          document.getElementById('checkoutGrid').style.display = 'none';
+          const pixScreen = document.getElementById('pixScreen');
+          pixScreen.style.display = 'block';
+
+          // Set QR Code and code text
+          const pixTotalDisp = document.getElementById('pixTotalDisplay');
+          if (pixTotalDisp) pixTotalDisp.textContent = formatBRL(subtotal);
+          document.getElementById('pixCodeText').textContent = data.qr_code;
+          const qrImgUrl = data.qr_code_url || `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(data.qr_code)}`;
+          document.getElementById('pixQrImg').src = qrImgUrl;
+
+          // Start Timer
+          startTimer(15 * 60);
+
+          // Scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
         }
+
+        // Se a gateway FreePay retornou erro:
+        let errMsg = data.error || 'A gateway FreePay não conseguiu processar o PIX no momento.';
+        if (errMsg.includes('adquirentes') || errMsg.includes('502')) {
+          errMsg = 'A FreePay está rejeitando a transação na adquirente bancária (Erro 502 da Adquirente). Verifique se a sua adquirente está ativa no painel da FreePay ou se você está usando um CPF diferente do dono da conta.';
+        }
+        alert('Aviso da Gateway FreePay: ' + errMsg);
+        btnPay.disabled = false;
+        btnPay.textContent = `CONCLUIR PEDIDO AGORA (${formatBRL(subtotal)})`;
+
       } catch (err) {
-        console.warn('Backend unavailable, activating instant direct PIX:', err);
+        alert('Erro ao conectar com o servidor: ' + err.message);
+        btnPay.disabled = false;
+        btnPay.textContent = `CONCLUIR PEDIDO AGORA (${formatBRL(subtotal)})`;
       }
-
-      // Fallback garantido de alta disponibilidade
-      if (!pixCode) {
-        pixCode = generateClientPix(amountCents);
-      }
-
-      globalPixCode = pixCode;
-
-      // Disparar evento Purchase no Meta Pixel
-      if (typeof fbq === 'function') {
-        fbq('track', 'Purchase', {
-          content_name: 'Combo Balaclava Mascara3D',
-          value: subtotal,
-          currency: 'BRL'
-        });
-      }
-
-      // Notificar CAPI do servidor em segundo plano
-      try {
-        fetch('/api/meta-capi', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            event_name: 'Purchase',
-            email: email,
-            phone: phone,
-            name: name,
-            value: subtotal
-          })
-        }).catch(() => {});
-      } catch(e) {}
-
-      // Hide checkout form and show PIX screen
-      document.getElementById('checkoutGrid').style.display = 'none';
-      const pixScreen = document.getElementById('pixScreen');
-      pixScreen.style.display = 'block';
-
-      // Set QR Code and code text
-      const pixTotalDisp = document.getElementById('pixTotalDisplay');
-      if (pixTotalDisp) pixTotalDisp.textContent = formatBRL(subtotal);
-      document.getElementById('pixCodeText').textContent = pixCode;
-      document.getElementById('pixQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(pixCode)}`;
-
-      // Start Timer
-      startTimer(15 * 60);
-
-      // Scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function copyPixCode() {
