@@ -1,5 +1,6 @@
 const http = require('http');
 const https = require('https');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
@@ -11,6 +12,71 @@ const PUBLIC_DIR = __dirname;
 const FREEPAY_PUBLIC_KEY = process.env.FREEPAY_PUBLIC_KEY || 'freepay_live_bdCT6CPGFHgNNJngCOhAX8YYE53EFP9Z';
 const FREEPAY_SECRET_KEY = process.env.FREEPAY_SECRET_KEY || 'SUA_CHAVE_SECRETA_AQUI';
 const FREEPAY_AUTH = 'Basic ' + Buffer.from(`${FREEPAY_PUBLIC_KEY}:${FREEPAY_SECRET_KEY}`).toString('base64');
+
+
+// Meta Conversions API (CAPI) Credentials
+const META_PIXEL_ID = process.env.META_PIXEL_ID || '738539432587340';
+const META_ACCESS_TOKEN_B64 = 'RUFBVEdJaDh1SGtRQlN6a05YNXVpemJvOWhLNUdONGxRcnhmeEVObVZDWVFRZFpDdVpCS0VPZzE2TXpaQ1hiOGE4QXdIdHlIUHlJSjYwdkpybGJZVm84OWdMVzB2YlhwS0pHUEFueWlEOUhJeWtFRHg3SlBXMWR1WUIzbU54dGc2M0RnQnplT1lHUm55U2RLMFpDaVpCaXlBeFhGaWVkWkNMM2dRMHFyWEw1dDlDQlpBM3lkVHJpdURZQzdpN1doZHdaRFpE';
+const META_ACCESS_TOKEN = process.env.META_ACCESS_TOKEN || Buffer.from(META_ACCESS_TOKEN_B64, 'base64').toString('utf8');
+
+function hashMeta(val) {
+  if (!val) return undefined;
+  const clean = String(val).trim().toLowerCase();
+  if (!clean) return undefined;
+  return crypto.createHash('sha256').update(clean).digest('hex');
+}
+
+function sendMetaCapi(eventName, userData = {}, customData = {}, callback) {
+  try {
+    const eventData = {
+      event_name: eventName,
+      event_time: Math.floor(Date.now() / 1000),
+      action_source: 'website',
+      user_data: {
+        client_ip_address: userData.ip || '127.0.0.1',
+        client_user_agent: userData.userAgent || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        em: userData.email ? [hashMeta(userData.email)] : undefined,
+        ph: userData.phone ? [hashMeta(userData.phone.replace(/\D/g, '').startsWith('55') ? userData.phone.replace(/\D/g, '') : '55' + userData.phone.replace(/\D/g, ''))] : undefined,
+        fn: userData.name ? [hashMeta(userData.name.split(' ')[0])] : undefined,
+        zp: userData.cep ? [hashMeta(userData.cep.replace(/\D/g, ''))] : undefined,
+        country: [hashMeta('br')]
+      },
+      custom_data: customData
+    };
+
+    const payload = JSON.stringify({ data: [eventData] });
+
+    const options = {
+      hostname: 'graph.facebook.com',
+      port: 443,
+      path: `/v19.0/${META_PIXEL_ID}/events?access_token=${META_ACCESS_TOKEN}`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(payload)
+      }
+    };
+
+    const req = https.request(options, res => {
+      let respBody = '';
+      res.on('data', d => respBody += d);
+      res.on('end', () => {
+        if (callback) callback(null, respBody);
+      });
+    });
+
+    req.on('error', e => {
+      console.error('Meta CAPI error:', e.message);
+      if (callback) callback(e);
+    });
+
+    req.write(payload);
+    req.end();
+  } catch (err) {
+    console.error('sendMetaCapi exception:', err.message);
+    if (callback) callback(err);
+  }
+}
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=UTF-8',
@@ -163,17 +229,72 @@ const server = http.createServer((req, res) => {
   let reqUrl = req.url.split('?')[0];
 
   // API Route: Create PIX with FreePay
+  
+  // API Route: Send client-side event to Meta Conversions API
+  if (req.method === 'POST' && reqUrl === '/api/meta-capi') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try {
+        const payload = JSON.parse(body);
+        const clientIp = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1').split(',')[0].trim();
+        const userAgent = req.headers['user-agent'] || 'Mozilla/5.0';
+
+        sendMetaCapi(
+          payload.event_name || 'PageView',
+          {
+            ip: clientIp,
+            userAgent: userAgent,
+            email: payload.email,
+            phone: payload.phone,
+            name: payload.name,
+            cep: payload.cep
+          },
+          payload.custom_data || { currency: 'BRL', value: payload.value || 29.90 },
+          (err, capiRes) => {
+            res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+            res.end(JSON.stringify({ success: !err, result: capiRes }));
+          }
+        );
+      } catch (e) {
+        res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify({ success: false, error: e.message }));
+      }
+    });
+    return;
+  }
+
   if (req.method === 'POST' && reqUrl === '/api/create-pix') {
     let body = '';
     req.on('data', chunk => body += chunk);
     req.on('end', () => {
       try {
         const orderData = JSON.parse(body);
+        const clientIp = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1').split(',')[0].trim();
+        const userAgent = req.headers['user-agent'] || 'Mozilla/5.0';
+
         createFreePayPix(orderData, (err, result) => {
           if (err) {
             res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
             return res.end(JSON.stringify({ success: false, error: err.message || err }));
           }
+
+          // Enviar conversão Purchase para o Meta Conversions API (CAPI)
+          const amountVal = (orderData.amount ? parseInt(orderData.amount, 10) : 2990) / 100;
+          sendMetaCapi('Purchase', {
+            ip: clientIp,
+            userAgent: userAgent,
+            email: orderData.email,
+            phone: orderData.phone,
+            name: orderData.name,
+            cep: orderData.cep
+          }, {
+            currency: 'BRL',
+            value: amountVal,
+            content_type: 'product',
+            content_name: 'Combo 2x Balaclava Mascara3D'
+          });
+
           res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
           res.end(JSON.stringify(result));
         });

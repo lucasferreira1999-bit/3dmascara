@@ -3339,6 +3339,17 @@
           currency: 'BRL'
         });
       }
+      try {
+        fetch('/api/meta-capi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event_name: 'AddToCart',
+            value: 29.90 * qty,
+            custom_data: { content_name: 'Combo 2x Balaclava Mascara3D', value: 29.90 * qty, currency: 'BRL' }
+          })
+        }).catch(() => {});
+      } catch (e) {}
       const m1 = modelsData[mask1Index];
       const m2 = modelsData[mask2Index];
       const quantity = qty;
@@ -3511,8 +3522,8 @@
     }
 
     function goToCheckout() {
+      const totalVal = cartItems.reduce((acc, it) => acc + (it.price * it.quantity), 0) || 29.90;
       if (typeof fbq === 'function') {
-        const totalVal = cartItems.reduce((acc, it) => acc + (it.price * it.quantity), 0) || 29.90;
         fbq('track', 'InitiateCheckout', {
           content_name: 'Combo Balaclava Mascara3D',
           num_items: cartItems.length,
@@ -3520,6 +3531,17 @@
           currency: 'BRL'
         });
       }
+      try {
+        fetch('/api/meta-capi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event_name: 'InitiateCheckout',
+            value: totalVal,
+            custom_data: { content_name: 'Combo Balaclava Mascara3D', num_items: cartItems.length, value: totalVal, currency: 'BRL' }
+          })
+        }).catch(() => {});
+      } catch (e) {}
       if (cartItems.length === 0) {
         addToCart(false);
       }
