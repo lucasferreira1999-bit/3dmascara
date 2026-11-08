@@ -1,0 +1,10 @@
+{
+  "name": "mascara-3d-landing-page",
+  "version": "1.0.0",
+  "description": "Loja Balaclava Mascara3D com checkout PIX FreePay",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {}
+}

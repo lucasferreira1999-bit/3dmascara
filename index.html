@@ -1,0 +1,3685 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Balaclava Máscara 3D de Rosto Realista – Mascara3D</title>
+  <meta name="description" content="Balaclava Máscara 3D de Rosto Ultra Realista. Realismo impressionante, diversão garantida e reações inesquecíveis. Frete grátis e promoção por tempo ilimitado de 2 por R$ 29,90.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #121212;
+      --accent: #d32f2f;
+      --accent-hover: #b71c1c;
+      --success: #00875a;
+      --star: #f5a623;
+      --bg: #ffffff;
+      --bg-alt: #f7f7f8;
+      --border: #e6e6e6;
+      --text: #1a1a1a;
+      --text-muted: #595959;
+      --radius: 8px;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+      background: none;
+      outline: none;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Announcement Bar */
+    .announcement-bar {
+      background: #000000;
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 9px 15px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+    .announcement-bar .stars {
+      color: #ffd700;
+      letter-spacing: 1px;
+    }
+    .announcement-bar .divider {
+      opacity: 0.4;
+    }
+
+    /* Header */
+    .header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .logo img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: none;
+      list-style: none;
+      gap: 28px;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .cart-btn {
+      position: relative;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+    }
+    .cart-count {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Product Section */
+    .product-section {
+      padding: 35px 0 60px;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    /* Gallery */
+    .product-gallery {
+      position: relative;
+    }
+    .gallery-card {
+      position: relative;
+      background: #fafafa;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    .gallery-card img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.4s ease;
+    }
+    .gallery-card:hover img {
+      transform: scale(1.02);
+    }
+    .gallery-thumbs {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: thin;
+    }
+    .gallery-thumbs::-webkit-scrollbar {
+      height: 4px;
+    }
+    .gallery-thumbs::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 4px;
+    }
+    .thumb-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      border: 2px solid #e2e8f0;
+      background: #fafafa;
+      overflow: hidden;
+      flex-shrink: 0;
+      cursor: pointer;
+      padding: 2px;
+      transition: all 0.2s ease;
+    }
+    .thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .thumb-btn:hover {
+      border-color: #888;
+    }
+    .thumb-btn.active {
+      border-color: #000;
+      box-shadow: 0 0 0 1px #000;
+    }
+
+    /* Model Swatches */
+    .swatches-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 600px) {
+      .swatches-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .swatch-btn {
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 6px 4px;
+      background: #ffffff;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .swatch-btn:hover {
+      border-color: #999;
+      background: #fafafa;
+    }
+    .swatch-btn.active {
+      border-color: #000;
+      background: #f8fafc;
+      box-shadow: 0 0 0 1px #000;
+    }
+    .swatch-btn img {
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #f0f0f0;
+    }
+    .swatch-btn span {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #333;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    /* Combo Promo Box */
+    .combo-builder {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .combo-preview-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .combo-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .combo-tab-btn {
+      padding: 10px 12px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.2s ease;
+    }
+    .combo-tab-btn strong {
+      color: #0f172a;
+      font-size: 0.88rem;
+    }
+    .combo-tab-btn.active {
+      border-color: #000000;
+      background: #0f172a;
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .combo-tab-btn.active strong {
+      color: #ffffff;
+    }
+    .combo-tab-btn:hover:not(.active) {
+      border-color: #94a3b8;
+      background: #f1f5f9;
+    }
+    .floating-stock-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: #fff0f0;
+      color: #d32f2f;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(211, 47, 47, 0.25);
+      box-shadow: 0 4px 10px rgba(211, 47, 47, 0.12);
+      z-index: 2;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #d32f2f;
+      border-radius: 50%;
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(211, 47, 47, 0); }
+      100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); }
+    }
+
+    /* Product Details */
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .rating-row .stars {
+      color: var(--star);
+      letter-spacing: 2px;
+    }
+    .product-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #111;
+    }
+
+    /* Price */
+    .price-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .price-main {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #111;
+    }
+    .price-old {
+      font-size: 1.25rem;
+      text-decoration: line-through;
+      color: #888;
+    }
+    .discount-pill {
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #c8e6c9;
+    }
+    .installments-note {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: -8px;
+    }
+    .installments-note strong {
+      color: #111;
+    }
+
+    /* Value props */
+    .props-box {
+      background: #fafafa;
+      border: 1px dashed #dcdcdc;
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .prop-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #222;
+    }
+    .prop-item .emoji {
+      font-size: 1.25rem;
+    }
+
+    /* Selectors */
+    .select-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .variant-box {
+      padding: 10px 18px;
+      border: 2px solid #000;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-block;
+      width: fit-content;
+      background: #fff;
+    }
+
+    .qty-wrap {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 125px;
+      overflow: hidden;
+    }
+    .qty-btn {
+      width: 38px;
+      height: 42px;
+      background: #f7f7f7;
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .qty-btn:hover {
+      background: #eee;
+    }
+    .qty-input {
+      width: 49px;
+      height: 42px;
+      text-align: center;
+      border: none;
+      font-weight: 700;
+      font-size: 1rem;
+      background: transparent;
+      outline: none;
+    }
+
+    /* CTAs */
+    .actions-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 5px;
+    }
+    .btn-checkout {
+      background: #000000;
+      color: #ffffff;
+      padding: 18px 24px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+    .btn-checkout:hover {
+      background: #252525;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+    .btn-cart-secondary {
+      background: #ffffff;
+      color: #111111;
+      border: 2px solid #111111;
+      padding: 14px 24px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      text-align: center;
+      width: 100%;
+    }
+    .btn-cart-secondary:hover {
+      background: #f5f5f5;
+    }
+
+    /* In-product Review Carousel with Packaging photo */
+    .product-review-carousel {
+      background: #f8f9fa;
+      border: 1px solid #ebebeb;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 5px;
+    }
+    .review-carousel-slide {
+      display: none;
+      align-items: center;
+      gap: 16px;
+    }
+    .review-carousel-slide.active {
+      display: flex;
+    }
+    .review-slide-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid #ddd;
+    }
+    .review-slide-content {
+      flex: 1;
+      font-size: 0.88rem;
+    }
+    .review-slide-text {
+      color: #333;
+      margin-bottom: 6px;
+      line-height: 1.45;
+    }
+    .review-slide-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+    .review-slide-meta .stars {
+      color: var(--star);
+    }
+    .carousel-nav-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nav-dot.active {
+      background: #111;
+      width: 20px;
+      border-radius: 4px;
+    }
+
+    /* Accordions */
+    .accordions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .accordion-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .accordion-btn {
+      width: 100%;
+      padding: 15px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #111;
+      text-align: left;
+    }
+    .accordion-btn .icon-toggle {
+      transition: transform 0.3s;
+    }
+    .accordion-card.open .icon-toggle {
+      transform: rotate(180deg);
+    }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 18px;
+      color: #555;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .accordion-card.open .accordion-body {
+      max-height: 300px;
+      padding: 0 18px 18px;
+    }
+
+    /* Trust & Payment */
+    .trust-footer-box {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: #444;
+      font-weight: 600;
+    }
+    .trust-grid div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .trust-grid svg {
+      color: var(--success);
+      flex-shrink: 0;
+    }
+    .pay-methods {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding-top: 5px;
+    }
+    .pay-tag {
+      background: #f0f1f3;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #555;
+    }
+
+    /* Rich Text Sections */
+    .section-text {
+      padding: 70px 20px;
+      text-align: center;
+    }
+    .section-text.bg-gray {
+      background: var(--bg-alt);
+    }
+    .text-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .text-heading {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: #111;
+      line-height: 1.3;
+    }
+    .text-body {
+      font-size: 1.15rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* Banner Images */
+    .banner-view {
+      width: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    .banner-view img {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      height: auto;
+      display: block;
+    }
+
+    /* Testimonials */
+    .section-reviews {
+      padding: 80px 0;
+      background: #ffffff;
+    }
+    .reviews-head {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+    .reviews-head h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .reviews-head p {
+      font-size: 1rem;
+      color: #666;
+    }
+    .reviews-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .review-card {
+      background: #f8f8f9;
+      border: 1px solid #e7e7e8;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    }
+    .review-pic {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      background: #eee;
+    }
+    .review-card-body {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .review-stars {
+      color: var(--star);
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .review-card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #111;
+    }
+    .review-card-text {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .review-author-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #111;
+      padding-top: 12px;
+      border-top: 1px solid #ebebeb;
+    }
+    .review-user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e2e8f0;
+      background: #f1f5f9;
+      flex-shrink: 0;
+    }
+    .review-user-meta {
+      display: flex;
+      flex-direction: column;
+    }
+    .review-user-name {
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .review-user-location {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .verified-pill {
+      color: var(--success);
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    /* Review Card with Avatar & Photo Badge */
+    .review-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      background: #eee;
+    }
+    .review-photo-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+
+    /* Feedback Submit Card & User Photo Input Field */
+    .feedback-submit-card {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 35px;
+    }
+    .feedback-submit-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .btn-toggle-feedback-form {
+      background: #000000;
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-toggle-feedback-form:hover {
+      background: #252525;
+    }
+    .review-form-body {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    @media (max-width: 600px) {
+      .form-row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #334155;
+    }
+    .form-input {
+      padding: 10px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #0f172a;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+    .form-input:focus {
+      border-color: #000000;
+    }
+    .upload-field-box {
+      border: 2px dashed #94a3b8;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 22px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .upload-field-box:hover {
+      border-color: #000000;
+      background: #f8fafc;
+    }
+    .upload-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .btn-publish-review {
+      background: #16a34a;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: none;
+    }
+    .btn-publish-review:hover {
+      background: #15803d;
+    }
+    .btn-cancel-review {
+      background: #e2e8f0;
+      color: #334155;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-cancel-review:hover {
+      background: #cbd5e1;
+    }
+
+    /* Final CTA */
+    .section-cta {
+      background: #111111;
+      color: #ffffff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .cta-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .cta-inner h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+    }
+    .cta-inner p {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+    .btn-white-cta {
+      background: #ffffff;
+      color: #111111;
+      padding: 16px 36px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      border-radius: 8px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2);
+      transition: all 0.25s ease;
+    }
+    .btn-white-cta:hover {
+      background: #f0f0f0;
+      transform: scale(1.03);
+    }
+
+    /* Footer */
+    .footer {
+      background: #0d0d0d;
+      color: #a0a0a0;
+      padding: 60px 0 30px;
+      font-size: 0.9rem;
+      border-top: 1px solid #222;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .footer-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-nav a:hover {
+      color: #ffffff;
+    }
+    .footer-bottom {
+      border-top: 1px solid #222;
+      padding-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    /* Cart Drawer */
+    .cart-backdrop {
+      position: fixed;
+      z-index: 99998 !important;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(2px);
+    }
+    .cart-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .cart-drawer-panel {
+      position: fixed;
+      z-index: 99999 !important;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 420px;
+      height: 100%;
+      background: #ffffff;
+      z-index: 999;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+    }
+    .cart-drawer-panel.open {
+      transform: translateX(0);
+    }
+    .drawer-top {
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .drawer-top h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .close-btn {
+      font-size: 1.5rem;
+      color: #666;
+    }
+    .free-shipping-indicator {
+      background: #f0fdf4;
+      padding: 12px 20px;
+      border-bottom: 1px solid #dcfce7;
+      font-size: 0.85rem;
+      color: #166534;
+      font-weight: 600;
+      text-align: center;
+    }
+    .bar-line {
+      height: 6px;
+      background: #bbf7d0;
+      border-radius: 3px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      width: 100%;
+      height: 100%;
+      background: #16a34a;
+    }
+    .drawer-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .drawer-item {
+      display: flex;
+      gap: 15px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .drawer-item-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #f4f4f4;
+      border: 1px solid #e0e0e0;
+    }
+    .drawer-item-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .drawer-item-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      line-height: 1.25;
+    }
+    .drawer-item-price {
+      font-weight: 800;
+      font-size: 1rem;
+      color: #111;
+    }
+    .drawer-bottom {
+      padding: 20px;
+      background: #fafafa;
+      border-top: 1px solid var(--border);
+    }
+    .drawer-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+    .btn-finish-checkout {
+      width: 100%;
+      background: #000000;
+      color: #ffffff;
+      padding: 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .btn-finish-checkout:hover {
+      background: #222;
+    }
+    .timer-badge {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #b91c1c;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    /* Mobile Sticky Bar */
+    .mobile-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      padding: 10px 14px;
+      z-index: 999;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mobile-bar-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .mobile-bar-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      max-width: 160px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #0f172a;
+    }
+    .mobile-bar-price {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #16a34a;
+    }
+    .btn-mobile-buy {
+      background: #16a34a;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35);
+      transition: background 0.2s;
+    }
+    .btn-mobile-buy:active {
+      background: #15803d;
+      transform: scale(0.98);
+    }
+
+    /* Catalog Showcase Section */
+    .catalog-section {
+      padding: 70px 0;
+      background: #f8f9fa;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .catalog-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .catalog-header h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .catalog-header p {
+      font-size: 1rem;
+      color: #666;
+    }
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 1024px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 550px) {
+      .catalog-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .catalog-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+    .catalog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+    }
+    .catalog-img-wrap {
+      position: relative;
+      height: 260px;
+      background: #f4f4f4;
+      overflow: hidden;
+    }
+    .catalog-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .catalog-card:hover .catalog-img-wrap img {
+      transform: scale(1.04);
+    }
+    .catalog-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #000;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .catalog-content {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .catalog-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .catalog-stars {
+      color: var(--star);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .catalog-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 10px;
+    }
+    .cat-price-main {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #111;
+    }
+    .cat-price-old {
+      font-size: 0.9rem;
+      text-decoration: line-through;
+      color: #888;
+    }
+    .btn-select-model {
+      margin-top: 12px;
+      width: 100%;
+      background: #000;
+      color: #fff;
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      transition: background 0.2s;
+      text-align: center;
+      display: block;
+      cursor: pointer;
+    }
+    .btn-select-model:hover {
+      background: #252525;
+    }
+
+    /* Live Visitors Counter */
+    .live-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .pulse-dot-green {
+      width: 8px;
+      height: 8px;
+      background: #16a34a;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+      animation: pulseGreen 1.8s infinite;
+    }
+    @keyframes pulseGreen {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+    }
+
+    /* Shipping Simulator */
+    .shipping-simulator {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 18px;
+    }
+    .shipping-sim-header {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .shipping-sim-input-row {
+      display: flex;
+      gap: 8px;
+    }
+    .cep-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .cep-input:focus {
+      border-color: #16a34a;
+    }
+    .btn-calc-cep {
+      background: #0f172a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0 18px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-calc-cep:hover {
+      background: #1e293b;
+    }
+    .shipping-result {
+      margin-top: 10px;
+      background: #ffffff;
+      border: 1.5px solid #86efac;
+      border-radius: 6px;
+      padding: 10px 14px;
+      animation: fadeIn 0.3s ease;
+    }
+    .shipping-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .shipping-tag {
+      font-weight: 800;
+      color: #166534;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .shipping-time {
+      color: #64748b;
+      font-size: 0.82rem;
+    }
+    .shipping-free {
+      font-weight: 900;
+      color: #16a34a;
+      background: #dcfce7;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    /* Live Social Proof Toast */
+    .social-proof-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 20px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 998;
+      max-width: 330px;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      transform: translateY(120px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .social-proof-toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .toast-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid #e2e8f0;
+    }
+    .toast-content {
+      flex: 1;
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+    .toast-title {
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .toast-subtitle {
+      color: #16a34a;
+      font-weight: 700;
+    }
+    .toast-time {
+      color: #94a3b8;
+      font-size: 0.7rem;
+    }
+    .toast-close {
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      padding: 2px;
+      align-self: flex-start;
+      border: none;
+      background: none;
+    }
+
+    /* Tech Features Grid */
+    .tech-features-section {
+      padding: 60px 0;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title-wrap {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 40px;
+    }
+    .section-title-wrap h2 {
+      font-size: 1.95rem;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+    .section-title-wrap p {
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+    .tech-features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .tech-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .tech-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+    .tech-icon-wrap {
+      width: 56px;
+      height: 56px;
+      background: #dcfce7;
+      color: #15803d;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 1.8rem;
+    }
+    .tech-card-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .tech-card-desc {
+      font-size: 0.85rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    /* Comparison Section */
+    .comparison-section {
+      padding: 60px 0;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+    }
+    .comparison-table-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.04);
+    }
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 1.6fr 1.3fr 1fr;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f1f5f9;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .comparison-row.header {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.92rem;
+    }
+    .comparison-row:nth-child(even):not(.header) {
+      background: #fafafa;
+    }
+    .col-mascara3d {
+      color: #16a34a;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .col-others {
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (min-width: 900px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding-bottom: 84px;
+      }
+      .product-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .product-section {
+        padding-top: 15px;
+        padding-bottom: 35px;
+      }
+      .product-title {
+        font-size: 1.4rem;
+        line-height: 1.3;
+      }
+      .price-main {
+        font-size: 1.75rem;
+      }
+      .text-heading {
+        font-size: 1.45rem;
+      }
+      .container {
+        padding: 0 14px;
+      }
+      .header-inner {
+        height: 56px;
+      }
+      .announcement-bar {
+        font-size: 0.72rem;
+        padding: 7px 10px;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .announcement-bar .divider {
+        display: none;
+      }
+
+      /* Dimensões e Proporções Perfeitas para Mobile e iOS (iPhone / Safari) */
+      img {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      /* Foto Principal da Galeria (Enquadramento Perfeito e Responsivo para Celular) */
+      .product-gallery {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+      }
+      .gallery-card {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 380px !important;
+        aspect-ratio: 1 / 1 !important;
+        margin: 0 auto !important;
+        border-radius: 14px !important;
+        overflow: hidden !important;
+        background: #f8fafc !important;
+        border: 1px solid var(--border) !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+        display: block !important;
+        text-align: center !important;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+      }
+      .gallery-card img, #mainProductImg {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        display: block !important;
+        margin: 0 auto !important;
+        object-fit: contain !important;
+        -webkit-backface-visibility: hidden;
+      }
+      .floating-stock-badge {
+        position: absolute !important;
+        top: 10px !important;
+        left: 10px !important;
+        font-size: 0.72rem !important;
+        padding: 5px 11px !important;
+        z-index: 5 !important;
+      }
+
+      /* Miniaturas de Fotos com Touch Scroll Fluido */
+      .gallery-thumbs {
+        display: flex !important;
+        gap: 8px !important;
+        margin: 12px auto 0 !important;
+        max-width: 380px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding-bottom: 6px !important;
+        scrollbar-width: none;
+      }
+      .gallery-thumbs::-webkit-scrollbar {
+        display: none;
+      }
+      .thumb-btn {
+        width: 58px !important;
+        height: 58px !important;
+        min-width: 58px !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 8px !important;
+        flex-shrink: 0 !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        border: 2px solid #e2e8f0 !important;
+        -webkit-transform: translateZ(0);
+      }
+      .thumb-btn img {
+        width: 100% !important;
+        height: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        display: block !important;
+      }
+
+      /* Grade de Modelos no Construtor */
+      .swatches-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 6px !important;
+      }
+      .swatch-btn {
+        padding: 6px 3px !important;
+        border-radius: 8px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .swatch-btn img {
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        border-radius: 6px !important;
+        display: block !important;
+      }
+      .swatch-btn span {
+        font-size: 0.72rem !important;
+        margin-top: 2px !important;
+      }
+
+      /* Preview dos 2 Modelos Escolhidos */
+      .combo-preview-card img, #comboPreview1, #comboPreview2 {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 6px !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        flex-shrink: 0 !important;
+        display: block !important;
+      }
+
+      /* Banners Promocionais */
+      .banner-view {
+        width: 100% !important;
+        position: relative !important;
+        overflow: hidden !important;
+      }
+      .banner-view img {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+        display: block !important;
+        object-fit: contain !important;
+      }
+
+      /* Catálogo de Modelos (2 Colunas Perfeitas em Proporção 1:1) */
+      .catalog-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .catalog-card {
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        background: #fff !important;
+      }
+      .catalog-img-wrap {
+        position: relative !important;
+        width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        height: auto !important;
+        overflow: hidden !important;
+        background: #f4f4f4 !important;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+      }
+      .catalog-img-wrap img {
+        width: 100% !important;
+        height: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        display: block !important;
+      }
+      .catalog-content {
+        padding: 10px !important;
+      }
+      .catalog-title {
+        font-size: 0.82rem !important;
+        min-height: 36px !important;
+        line-height: 1.25 !important;
+      }
+      .cat-price-main {
+        font-size: 1.05rem !important;
+      }
+
+      /* Avaliações e Fotos Reais dos Compradores (Proporção 4:3) */
+      .reviews-cards {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+      .review-img-wrap {
+        position: relative !important;
+        width: 100% !important;
+        aspect-ratio: 4 / 3 !important;
+        height: auto !important;
+        overflow: hidden !important;
+        background: #f1f5f9 !important;
+        border-radius: 12px 12px 0 0 !important;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+      }
+      .review-img-wrap img, .review-pic {
+        width: 100% !important;
+        height: 100% !important;
+        aspect-ratio: 4 / 3 !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        display: block !important;
+        background: #0f172a !important;
+      }
+      .review-user-avatar {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        border-radius: 50% !important;
+        flex-shrink: 0 !important;
+        display: inline-block !important;
+      }
+
+      /* Miniatura do Unboxing no Slide */
+      .review-slide-img {
+        width: 70px !important;
+        height: 70px !important;
+        min-width: 70px !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        border-radius: 8px !important;
+        flex-shrink: 0 !important;
+        display: block !important;
+      }
+
+      /* Miniaturas no Carrinho Gaveta */
+      .drawer-item-img {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 6px !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        flex-shrink: 0 !important;
+        display: block !important;
+      }
+
+      /* Barra Fixa Mobile */
+      .mobile-bar {
+        display: flex !important;
+      }
+      .btn-checkout {
+        padding: 16px !important;
+        font-size: 1rem !important;
+      }
+      .cart-drawer-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .footer-cols {
+        grid-template-columns: 1fr !important;
+        gap: 25px !important;
+      }
+      .social-proof-toast {
+        bottom: 78px;
+        left: 12px;
+        right: 12px;
+        max-width: calc(100% - 24px);
+      }
+      .tech-features-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+      }
+      .comparison-row {
+        grid-template-columns: 1.4fr 1.3fr 0.9fr !important;
+        padding: 12px 14px !important;
+        font-size: 0.8rem !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tech-features-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .comparison-row {
+        grid-template-columns: 1.2fr 1.2fr 0.8fr !important;
+        padding: 10px 10px !important;
+        font-size: 0.74rem !important;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .swatches-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+      .catalog-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <span>🔥 OFERTA ESPECIAL: COMBO 2X BALACLAVA 3D POR APENAS R$ 29,90 + FRETE GRÁTIS</span>
+    <span class="divider">|</span>
+    <span>🎁 COMPRAS ACIMA DE R$ 99,90 GANHAM UM BRINDE EXCLUSIVO!</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <button aria-label="Menu" style="display: flex; align-items: center; padding: 4px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="#" class="logo" style="text-decoration: none; display: flex; align-items: center; gap: 6px;">
+          <span style="font-size: 1.55rem; font-weight: 900; letter-spacing: -0.5px; color: #0f172a; font-family: inherit;">Mascara<span style="color: #ef4444; font-weight: 900;">3D</span></span>
+        </a>
+      </div>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#produto">Início</a></li>
+          <li><a href="#modelos">Todos os Modelos</a></li>
+          <li><a href="#detalhes">Detalhes</a></li>
+          <li><a href="#depoimentos">Avaliações</a></li>
+          <li><a href="#contato">Suporte</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-right">
+        <button class="cart-btn" id="openCartBtn" aria-label="Carrinho">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Product Section -->
+  <section class="product-section" id="produto">
+    <div class="container">
+      <div class="product-grid">
+        
+        <!-- Left: Gallery -->
+        <div class="product-gallery">
+          <div class="gallery-card">
+            <span class="floating-stock-badge">
+              <span class="pulse-dot"></span>
+              Estoque Limitado / Poucas Unidades
+            </span>
+            <img id="mainProductImg" src="assets/images/mask-snow-smile.jpg" alt="Balaclava Máscara 3D de Rosto Realista">
+          </div>
+          <!-- Gallery Thumbnails -->
+          <div class="gallery-thumbs" id="galleryThumbs">
+            <button type="button" class="thumb-btn active" onclick="selectModel(0)" title="Modelo 01 - Sorriso Épico na Neve">
+              <img src="assets/images/mask-snow-smile.jpg" alt="Modelo 01">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(1)" title="Modelo 02 - Bigode Retrô Imperial na Neve">
+              <img src="assets/images/mask-snow-mustache.jpg" alt="Modelo 02">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(2)" title="Modelo 03 - Bebê Fofo com Chupeta 3D">
+              <img src="assets/images/mask-snow-baby.jpg" alt="Modelo 03">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(3)" title="Modelo 04 - Rosto Original Realista">
+              <img src="assets/images/product-main.png" alt="Modelo 04">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(4)" title="Modelo 05 - Sorriso Cômico">
+              <img src="assets/images/mask-ali-2.jpg" alt="Modelo 05">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(5)" title="Modelo 06 - Bigode Grisalho">
+              <img src="assets/images/mask-ali-3.jpg" alt="Modelo 06">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(6)" title="Modelo 07 - Expressão Espanto">
+              <img src="assets/images/mask-ali-4.jpg" alt="Modelo 07">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(7)" title="Modelo 08 - Careca Rugas Realistas">
+              <img src="assets/images/mask-ali-5.jpg" alt="Modelo 08">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(8)" title="Modelo 09 - Bigode Tradicional">
+              <img src="assets/images/mask-ali-6.jpg" alt="Modelo 09">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(9)" title="Modelo 10 - Amarelo Gamer Malandro">
+              <img src="assets/images/mask-yellow-gamer.png" alt="Modelo 10">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(10)" title="Modelo 11 - Amarelo Debochado com Língua">
+              <img src="assets/images/mask-yellow-tongue.png" alt="Modelo 11">
+            </button>
+            <button type="button" class="thumb-btn" onclick="selectModel(11)" title="Modelo 12 - Amarelo Dente de Ouro">
+              <img src="assets/images/mask-yellow-goldtooth.png" alt="Modelo 12">
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Info -->
+        <div class="product-info">
+          <div>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span>4.9/5 de +1.250 Avaliações Verificadas</span>
+            </div>
+            <h1 class="product-title">Balaclava Máscara 3D de Rosto Realista</h1>
+            <div class="live-counter">
+              <span class="pulse-dot-green"></span>
+              <span><strong id="liveVisitorCount">47</strong> pessoas estão visualizando esta oferta agora</span>
+            </div>
+          </div>
+
+          
+
+          <!-- Brinde Callout Banner -->
+          <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+            <span style="font-size: 1.6rem;">🎁</span>
+            <div style="font-size: 0.86rem; color: #166534; font-weight: 700;">
+              <strong>BÔNUS EXCLUSIVO:</strong> Compras acima de <strong>R$ 99,90</strong> ganham um <strong>BRINDE ESPECIAL</strong> surpresa liberado no carrinho!
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="price-wrap">
+            <div>
+              <span class="price-main" id="productPrice">R$ 29,90</span>
+              <span style="font-size: 0.85rem; font-weight: 800; color: #16a34a; margin-left: 6px;">(Por Combo de 2 Máscaras)</span>
+            </div>
+            <span class="price-old">R$ 119,90</span>
+            <span class="discount-pill" style="background: #dcfce7; color: #15803d; border-color: #86efac; font-weight: 800;">75% OFF • Combo 2x Máscaras</span>
+          </div>
+          <div class="installments-note">
+            ou em até <strong>3x de R$ 9,97</strong> no cartão de crédito com Frete Grátis
+          </div>
+
+          <!-- Highlights -->
+          <div class="props-box">
+            <div class="prop-item">
+              <span class="emoji">🎁</span>
+              <span><strong>Super Oferta:</strong> 2 Máscaras inclusas por apenas R$ 29,90 com Frete Grátis Assegurado!</span>
+            </div>
+            <div class="prop-item">
+              <span class="emoji">🎭</span>
+              <span><strong>Realismo impactante:</strong> Feições 3D ultra definidas e tecido respirável.</span>
+            </div>
+            <div class="prop-item">
+              <span class="emoji">😂</span>
+              <span><strong>Diversão garantida:</strong> Gargalhadas instantâneas com seus amigos.</span>
+            </div>
+          </div>
+
+          <!-- Combo Builder Box -->
+          <div class="combo-builder">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="select-label" style="margin-bottom: 0;">Monte seu Combo (2 Máscaras):</span>
+              <span style="font-size: 0.78rem; font-weight: 800; background: #dcfce7; color: #15803d; padding: 3px 10px; border-radius: 12px;">✓ 2 Máscaras por R$ 29,90</span>
+            </div>
+
+            <!-- Preview Card -->
+            <div class="combo-preview-card">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="position: relative;">
+                  <img id="comboPreview1" src="assets/images/mask-snow-smile.jpg" style="width: 48px; height: 48px; border-radius: 6px; object-fit: cover; border: 2px solid #000;">
+                  <span style="position: absolute; bottom: -5px; right: -5px; background: #000; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 1px 5px; border-radius: 10px;">1ª</span>
+                </div>
+                <span style="font-weight: 900; font-size: 1.2rem; color: #94a3b8;">+</span>
+                <div style="position: relative;">
+                  <img id="comboPreview2" src="assets/images/mask-snow-mustache.jpg" style="width: 48px; height: 48px; border-radius: 6px; object-fit: cover; border: 2px solid #16a34a;">
+                  <span style="position: absolute; bottom: -5px; right: -5px; background: #16a34a; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 1px 5px; border-radius: 10px;">2ª</span>
+                </div>
+                <div style="margin-left: 4px;">
+                  <div style="font-size: 0.88rem; font-weight: 800; color: #0f172a;" id="comboSummaryTitle">Combo: Mod 01 + Mod 02</div>
+                  <div style="font-size: 0.75rem; color: #16a34a; font-weight: 700;">Leve 2 por apenas R$ 29,90</div>
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-size: 1.25rem; font-weight: 900; color: #0f172a;">R$ 29,90</span>
+                <div style="font-size: 0.72rem; color: #94a3b8; text-decoration: line-through;">R$ 119,90</div>
+              </div>
+            </div>
+
+            <!-- Tabs to toggle which mask you are picking -->
+            <div class="combo-tabs">
+              <button type="button" id="tabMask1" class="combo-tab-btn active" onclick="switchComboSlot(1)">
+                <span>1ª Máscara</span>
+                <strong id="tabMask1Name">Mod 01</strong>
+              </button>
+              <button type="button" id="tabMask2" class="combo-tab-btn" onclick="switchComboSlot(2)">
+                <span>2ª Máscara (Grátis)</span>
+                <strong id="tabMask2Name">Mod 02</strong>
+              </button>
+            </div>
+
+            <div style="font-size: 0.8rem; color: #64748b; font-weight: 600;" id="slotInstruction">
+              👉 Clique em um modelo abaixo para definir a <strong>1ª Máscara</strong>:
+            </div>
+
+            <!-- Variant Selector with All Masks -->
+            <div class="swatches-grid" id="modelSwatches">
+              <button type="button" class="swatch-btn active" onclick="selectModel(0)">
+                <img src="assets/images/mask-snow-smile.jpg" alt="Mod 01">
+                <span>Mod 01</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(1)">
+                <img src="assets/images/mask-snow-mustache.jpg" alt="Mod 02">
+                <span>Mod 02</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(2)">
+                <img src="assets/images/mask-snow-baby.jpg" alt="Mod 03">
+                <span>Mod 03</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(3)">
+                <img src="assets/images/product-main.png" alt="Mod 04">
+                <span>Mod 04</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(4)">
+                <img src="assets/images/mask-ali-2.jpg" alt="Mod 05">
+                <span>Mod 05</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(5)">
+                <img src="assets/images/mask-ali-3.jpg" alt="Mod 06">
+                <span>Mod 06</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(6)">
+                <img src="assets/images/mask-ali-4.jpg" alt="Mod 07">
+                <span>Mod 07</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(7)">
+                <img src="assets/images/mask-ali-5.jpg" alt="Mod 08">
+                <span>Mod 08</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(8)">
+                <img src="assets/images/mask-ali-6.jpg" alt="Mod 09">
+                <span>Mod 09</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(9)">
+                <img src="assets/images/mask-yellow-gamer.png" alt="Mod 10">
+                <span>Mod 10</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(10)">
+                <img src="assets/images/mask-yellow-tongue.png" alt="Mod 11">
+                <span>Mod 11</span>
+              </button>
+              <button type="button" class="swatch-btn" onclick="selectModel(11)">
+                <img src="assets/images/mask-yellow-goldtooth.png" alt="Mod 12">
+                <span>Mod 12</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quantity -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span class="select-label" style="margin-bottom: 0;">Quantidade de Combos:</span>
+              <span style="font-size: 0.75rem; font-weight: 800; color: #16a34a; background: #dcfce7; padding: 2px 8px; border-radius: 10px;">R$ 29,90 cada combo</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="qty-wrap">
+                <button class="qty-btn" id="btnMinus" type="button">-</button>
+                <input class="qty-input" id="qtyInput" type="text" value="1" readonly>
+                <button class="qty-btn" id="btnPlus" type="button">+</button>
+              </div>
+              <span style="font-size: 0.85rem; font-weight: 700; color: #16a34a;" id="qtyUnitsText">
+                = 2 Máscaras por R$ 29,90
+              </span>
+            </div>
+            <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">
+              💡 Cada combo contém 2 máscaras. O valor promocional de R$ 29,90 é mantido para quantas compras você fizer!
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="actions-box">
+            <button class="btn-checkout" id="btnBuyNow" type="button">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+              GARANTIR 2 MÁSCARAS POR R$ 29,90
+            </button>
+            <button class="btn-cart-secondary" id="btnAddToCart" type="button">
+              Adicionar Combo ao Carrinho
+            </button>
+          </div>
+
+          <!-- Simulador de Frete com Cálculo de CEP -->
+          <div class="shipping-simulator">
+            <div class="shipping-sim-header">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+              <span>Calcular Frete e Prazo de Entrega:</span>
+            </div>
+            <div class="shipping-sim-input-row">
+              <input type="text" id="cepInput" placeholder="Digite seu CEP (00000-000)" maxlength="9" class="cep-input">
+              <button type="button" class="btn-calc-cep" onclick="calculateShipping()">CALCULAR</button>
+            </div>
+            <div id="shippingResult" class="shipping-result" style="display: none;">
+              <div class="shipping-line">
+                <span class="shipping-tag">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  SEDEX Assegurado
+                </span>
+                <span class="shipping-time">Chega em 4 a 8 dias úteis</span>
+                <span class="shipping-free">GRÁTIS</span>
+              </div>
+              <div style="font-size: 0.75rem; color: #15803d; margin-top: 4px;">
+                ✓ Código de rastreamento enviado via WhatsApp e E-mail.
+              </div>
+            </div>
+          </div>
+
+          <!-- In-Product Mini Review Carousel with Shipping Package Image -->
+          <div class="product-review-carousel">
+            <!-- Slide 1 -->
+            <div class="review-carousel-slide active" id="revSlide1">
+              <img class="review-slide-img" src="assets/images/package.jpg" alt="Foto embalagem segura">
+              <div class="review-slide-content">
+                <p class="review-slide-text">"Comprei para zoar com meus parceiros e foi um sucesso total 😂. Todo mundo quer colocar e tirar foto."</p>
+                <div class="review-slide-meta">
+                  <span>Luís Alberto Ribeiro (Recife, PE)</span>
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="review-carousel-slide" id="revSlide2">
+              <div class="review-slide-content" style="padding-left: 5px;">
+                <p class="review-slide-text">"Exatamente o que eu precisava. O processo de compra foi muito fácil e o suporte foi atencioso quando tirei dúvida. Super recomendo!"</p>
+                <div class="review-slide-meta">
+                  <span>Isabela Lima Barbosa (Salvador, BA)</span>
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="review-carousel-slide" id="revSlide3">
+              <div class="review-slide-content" style="padding-left: 5px;">
+                <p class="review-slide-text">"Cinco estrelas em todos os quesitos! O material é confortável, não sufoca e a impressão 3D é surpreendente."</p>
+                <div class="review-slide-meta">
+                  <span>Tamara Lourenço Ferreira (Vitória, ES)</span>
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carousel Dots -->
+            <div class="carousel-nav-dots">
+              <div class="nav-dot active" onclick="setRevSlide(0)"></div>
+              <div class="nav-dot" onclick="setRevSlide(1)"></div>
+              <div class="nav-dot" onclick="setRevSlide(2)"></div>
+            </div>
+          </div>
+
+          <!-- Accordions -->
+          <div class="accordions" id="detalhes">
+            <!-- Item 1 -->
+            <div class="accordion-card open">
+              <button class="accordion-btn" type="button">
+                <span>🚚 Frete Grátis e Assegurado</span>
+                <span class="icon-toggle">▼</span>
+              </button>
+              <div class="accordion-body">
+                Os envios são totalmente gratuitos e segurados. O tempo de processamento é de 1 a 3 dias úteis. O prazo de entrega é de 4 a 8 dias úteis com código de rastreamento enviado via e-mail e WhatsApp para acompanhar seu pacote.
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="accordion-card">
+              <button class="accordion-btn" type="button">
+                <span>🛡️ Garantia de 30 Dias</span>
+                <span class="icon-toggle">▼</span>
+              </button>
+              <div class="accordion-body">
+                Experimente por 30 dias. Se não gostar ou se o produto não atender às suas expectativas, basta solicitar e devolveremos seu dinheiro sem nenhuma complicação.
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="accordion-card">
+              <button class="accordion-btn" type="button">
+                <span>⚡ Como funciona a promoção do Combo por R$ 29,90?</span>
+                <span class="icon-toggle">▼</span>
+              </button>
+              <div class="accordion-body">
+                Aproveite o combo promocional de 2 máscaras 3D por apenas R$ 29,90 com frete grátis liberado para todo o Brasil!
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="trust-footer-box">
+            <div class="trust-grid">
+              <div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>Frete Grátis Todo Brasil</span>
+              </div>
+              <div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Garantia de 30 Dias</span>
+              </div>
+              <div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <span>Pagamento 100% Protegido</span>
+              </div>
+              <div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                <span>Rastreamento Ativo</span>
+              </div>
+            </div>
+
+            <div class="pay-methods">
+              <span class="pay-tag">PIX</span>
+              <span class="pay-tag">Cartão de Crédito</span>
+              <span class="pay-tag">Boleto</span>
+              <span class="pay-tag">Mercado Pago</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Features & Benefits Section -->
+  <section class="tech-features-section" id="diferenciais">
+    <div class="container">
+      <div class="section-title-wrap">
+        <h2>Por que a Balaclava Mascara3D é um Sucesso Viral?</h2>
+        <p>Desenvolvida com materiais de alta performance para garantir realismo chocante e máximo conforto térmico.</p>
+      </div>
+      <div class="tech-features-grid">
+        <div class="tech-card">
+          <div class="tech-icon-wrap">🎭</div>
+          <h3 class="tech-card-title">Impressão 3D Ultra Realista</h3>
+          <p class="tech-card-desc">Tecnologia gráfica de alta definição com mapeamento facial realista que engana os olhos até mesmo de perto.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon-wrap">❄️</div>
+          <h3 class="tech-card-title">Tecido Ice-Silk Respirável</h3>
+          <p class="tech-card-desc">Material leve e refrescante que dissipa o suor, não abafa a respiração e evita embaçar óculos ou viseiras.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon-wrap">📐</div>
+          <h3 class="tech-card-title">Ajuste Anatômico Flexível</h3>
+          <p class="tech-card-desc">Elastano premium com memória elástica unissex. Veste perfeitamente qualquer formato e tamanho de cabeça sem apertar.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon-wrap">🛡️</div>
+          <h3 class="tech-card-title">Proteção UV & Anti-Vento</h3>
+          <p class="tech-card-desc">Bloqueia poeira, vento frio e raios solares. Perfeita para motociclistas, ciclistas, festas, academia e brincadeiras.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Rich Text -->
+  <section class="section-text bg-gray">
+    <div class="container text-wrapper">
+      <h2 class="text-heading">Vai continuar sendo apenas mais um?</h2>
+      <p class="text-body">
+        Deixe de passar despercebido e prepare-se para roubar todas as atenções. 😈 Coloque a balaclava e provoque reações que ninguém espera.
+      </p>
+    </div>
+  </section>
+
+  <!-- Banner 1 -->
+  <section class="banner-view">
+    <img src="assets/images/banner-1.png" alt="Máscara Balaclava 3D em ação" loading="lazy">
+  </section>
+
+  <!-- Section 2: Rich Text -->
+  <section class="section-text">
+    <div class="container text-wrapper">
+      <h2 class="text-heading">Pronto para deixar todo mundo de boca aberta?</h2>
+      <p class="text-body">
+        Esqueça as brincadeiras sem graça e a mesmice. Surpreenda seus amigos e cause gargalhadas e reações inesquecíveis.
+      </p>
+      <div style="margin-top: 25px;">
+        <button class="btn-checkout" style="max-width: 360px; margin: 0 auto;" onclick="scrollToTop()">
+          🔥 COMPRAR A MINHA AGORA
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner 2 -->
+  <section class="banner-view">
+    <img src="assets/images/banner-2.png" alt="Detalhe Máscara Balaclava 3D" loading="lazy">
+  </section>
+
+  <!-- Comparison Section -->
+  <section class="comparison-section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <h2>Mascara3D Oficial vs. Imitações Comuns</h2>
+        <p>Entenda por que a nossa balaclava é a preferida de mais de 10.000 clientes no Brasil.</p>
+      </div>
+      <div class="comparison-table-wrap">
+        <div class="comparison-row header">
+          <div>Recursos & Benefícios</div>
+          <div>Mascara3D Oficial</div>
+          <div>Imitações Comuns</div>
+        </div>
+        <div class="comparison-row">
+          <div><strong>Qualidade da Impressão</strong></div>
+          <div class="col-mascara3d">✓ 3D Ultra Realista 4K</div>
+          <div class="col-others">✗ Estampa fosca e pixelada</div>
+        </div>
+        <div class="comparison-row">
+          <div><strong>Conforto Térmico</strong></div>
+          <div class="col-mascara3d">✓ Ice-Silk Respirável</div>
+          <div class="col-others">✗ Poliéster grosso que abafa</div>
+        </div>
+        <div class="comparison-row">
+          <div><strong>Promoção Especial</strong></div>
+          <div class="col-mascara3d">✓ 2 por R$ 29,90 (R$ 14,95 cada)</div>
+          <div class="col-others">✗ R$ 60+ por apenas 1 unidade</div>
+        </div>
+        <div class="comparison-row">
+          <div><strong>Brinde Acima de R$ 99,90</strong></div>
+          <div class="col-mascara3d">✓ Presente Exclusivo Grátis</div>
+          <div class="col-others">✗ Sem nenhum brinde</div>
+        </div>
+        <div class="comparison-row">
+          <div><strong>Garantia Incondicional</strong></div>
+          <div class="col-mascara3d">✓ 30 Dias para Testar</div>
+          <div class="col-others">✗ Sem garantia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Complete Masks Catalog Section -->
+  <section class="catalog-section" id="modelos">
+    <div class="container">
+      <div class="catalog-header">
+        <h2>Coleção Completa de Máscaras 3D Realistas</h2>
+        <p>Todas as máscaras abaixo estão <strong>inclusas na promoção Leve 2 por R$ 29,90</strong>! Escolha qualquer modelo para montar seu combo.</p>
+      </div>
+
+      <div class="catalog-grid">
+        
+        <!-- Card 1 (Destaque Principal) -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge" style="background: #0284c7;">Sensação da Neve ❄️</span>
+            <img src="assets/images/mask-snow-smile.jpg" alt="Modelo 01" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 01 - Sorriso Épico na Neve (Edição Especial)</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(0)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 2 (Novo Destaque) -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge" style="background: #e11d48;">Estilo Imperial 🎩</span>
+            <img src="assets/images/mask-snow-mustache.jpg" alt="Modelo 02" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 02 - Bigode Retrô Imperial na Neve</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(1)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 3 (Bebê com Chupeta Viral) -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge" style="background: #ec4899;">Viral no TikTok 👶🍼</span>
+            <img src="assets/images/mask-snow-baby.jpg" alt="Modelo 03" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 03 - Bebê Fofo com Chupeta 3D</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(2)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge">Mais Vendido 🔥</span>
+            <img src="assets/images/product-main.png" alt="Modelo 04" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 04 - Rosto Original Realista Mascara3D</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(3)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge">Divertido 😂</span>
+            <img src="assets/images/mask-ali-2.jpg" alt="Modelo 05" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 05 - Sorriso Cômico com Dentes</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(4)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge">Sucesso 🔥</span>
+            <img src="assets/images/mask-ali-3.jpg" alt="Modelo 06" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 06 - Tiozinho Bigode Grisalho</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(5)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge">Reações Épicas 🤯</span>
+            <img src="assets/images/mask-ali-4.jpg" alt="Modelo 07" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 07 - Expressão Espanto / Olhar Cômico</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(6)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge">Ultra Realista 🎭</span>
+            <img src="assets/images/mask-ali-5.jpg" alt="Modelo 08" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 08 - Velho Careca Rugas Expressivas</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(7)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge">Clássico 🌟</span>
+            <img src="assets/images/mask-ali-6.jpg" alt="Modelo 09" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 09 - Senhor Bigode Tradicional</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(8)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge" style="background: #eab308; color: #000; font-weight: 800;">Edição Gamer 🎮⚡</span>
+            <img src="assets/images/mask-yellow-gamer.png" alt="Modelo 10" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 10 - Amarelo Gamer Malandro (Edição Cartoon)</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(9)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 11 -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge" style="background: #f59e0b; color: #000; font-weight: 800;">Divertido 😝🔥</span>
+            <img src="assets/images/mask-yellow-tongue.png" alt="Modelo 11" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 11 - Amarelo Debochado com Língua (Edição Gamer)</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(10)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+        <!-- Card 12 -->
+        <div class="catalog-card">
+          <div class="catalog-img-wrap">
+            <span class="catalog-badge" style="background: #eab308; color: #000; font-weight: 800;">Estilo Puro 🪙⚡</span>
+            <img src="assets/images/mask-yellow-goldtooth.png" alt="Modelo 12" loading="lazy">
+          </div>
+          <div class="catalog-content">
+            <div class="catalog-stars">★★★★★</div>
+            <h3 class="catalog-title">Modelo 12 - Amarelo Dente de Ouro (Edição Gamer)</h3>
+            <div class="catalog-price-row">
+              <span class="cat-price-main">R$ 29,90</span>
+              <span class="discount-pill" style="font-size: 0.75rem; padding: 2px 6px; background: #fef2f2; color: #dc2626; border-color: #fecaca;">Leve 2 por 29,90</span>
+            </div>
+            <button class="btn-select-model" onclick="selectModelAndScroll(11)">Adicionar ao Combo</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="section-reviews" id="depoimentos">
+    <div class="container">
+      <div class="reviews-head">
+        <h2>+1.000 Clientes Satisfeitos</h2>
+        <p>Veja as fotos e depoimentos de quem já recebeu e testou em casa</p>
+      </div>
+
+
+
+      <div class="reviews-cards">
+        
+        <!-- Review 1 -->
+        <div class="review-card">
+          <div class="review-img-wrap">
+            <span class="review-photo-badge">📷 Foto do Comprador</span>
+            <img class="review-pic" src="assets/images/review-manuel-face.png" alt="Manuel José da Silva usando a balaclava 3D" loading="lazy" style="object-position: center top;">
+          </div>
+          <div class="review-card-body">
+            <div class="review-stars">★★★★★</div>
+            <h3 class="review-card-title">Tirei essa foto no espelho assim que chegou! 😂🔥</h3>
+            <p class="review-card-text">
+              "Chegou hoje aqui em casa e já coloquei na hora pra ver como ficava. Tirei essa selfie no espelho do quarto e mandei no grupo da família, todo mundo rachou o bico de rir kkkk. O material é muito bom, bem leve e ajusta certinho no rosto. Recomendo demais!"
+            </p>
+            <div class="review-author-wrap">
+              <div class="review-user-profile">
+                <img class="review-user-avatar" src="assets/images/user-manuel.png" alt="Manuel José da Silva" style="object-position: center 25%;">
+                <div class="review-user-meta">
+                  <span class="review-user-name">Manuel José da Silva</span>
+                  <span class="review-user-location">Campinas, SP</span>
+                </div>
+              </div>
+              <span class="verified-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Verificado
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-card">
+          <div class="review-img-wrap">
+            <span class="review-photo-badge">📷 Foto do Comprador</span>
+            <img class="review-pic" src="assets/images/testimonial-2.png" alt="Rafael Domingues dos Santos" loading="lazy">
+          </div>
+          <div class="review-card-body">
+            <div class="review-stars">★★★★★</div>
+            <h3 class="review-card-title">Uma parada boa demais! 🔥</h3>
+            <p class="review-card-text">
+              "Adorei como fica no rosto! É excelente para fazer brincadeiras com os amigos e ver a reação deles quando me veem. Recomendo muito!"
+            </p>
+            <div class="review-author-wrap">
+              <div class="review-user-profile">
+                <img class="review-user-avatar" src="assets/images/user-rafael.jpg" alt="Rafael" style="object-position: center 15%;">
+                <div class="review-user-meta">
+                  <span class="review-user-name">Rafael Domingues dos Santos</span>
+                  <span class="review-user-location">Rio de Janeiro, RJ</span>
+                </div>
+              </div>
+              <span class="verified-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Verificado
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-card">
+          <div class="review-img-wrap">
+            <span class="review-photo-badge">📷 Foto do Comprador</span>
+            <img class="review-pic" src="assets/images/testimonial-3.png" alt="Gabriel Pereira Lima" loading="lazy">
+          </div>
+          <div class="review-card-body">
+            <div class="review-stars">★★★★★</div>
+            <h3 class="review-card-title">Parece um rosto de verdade! 🤣</h3>
+            <p class="review-card-text">
+              "A qualidade dos detalhes me surpreendeu 😂. Quando coloquei, meus amigos não conseguiam parar de dar risada. Tá muito top!"
+            </p>
+            <div class="review-author-wrap">
+              <div class="review-user-profile">
+                <img class="review-user-avatar" src="assets/images/user-gabriel.png" alt="Gabriel Pereira Lima" style="object-position: center 15%;">
+                <div class="review-user-meta">
+                  <span class="review-user-name">Gabriel Pereira Lima</span>
+                  <span class="review-user-location">Belo Horizonte, MG</span>
+                </div>
+              </div>
+              <span class="verified-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Verificado
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 4: Bigode e Óculos Escuro -->
+        <div class="review-card">
+          <div class="review-img-wrap">
+            <span class="review-photo-badge">📷 Foto do Comprador</span>
+            <img class="review-pic" src="assets/images/review-bruno-mask.jpg" alt="Bruno Henrique de Oliveira com máscara 3D" style="object-position: center center;" loading="lazy">
+          </div>
+          <div class="review-card-body">
+            <div class="review-stars">★★★★★</div>
+            <h3 class="review-card-title">Com o óculos escuro ficou muito realista! 🕶️😂</h3>
+            <p class="review-card-text">
+              "Coloquei a máscara com o óculos de sol e o resultado ficou inacreditável! O bigode e as rugas 3D parecem de verdade, cheguei em casa e preguei um baita susto na família kkkk. O tecido encaixa certinho e respira super bem!"
+            </p>
+            <div class="review-author-wrap">
+              <div class="review-user-profile">
+                <img class="review-user-avatar" src="assets/images/user-bruno.jpg" alt="Bruno Henrique de Oliveira" style="object-position: center 20%;">
+                <div class="review-user-meta">
+                  <span class="review-user-name">Bruno Henrique de Oliveira</span>
+                  <span class="review-user-location">Curitiba, PR</span>
+                </div>
+              </div>
+              <span class="verified-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Verificado
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 5: Bigode Imperial na Neve -->
+        <div class="review-card">
+          <div class="review-img-wrap">
+            <span class="review-photo-badge">📷 Foto do Comprador</span>
+            <img class="review-pic" src="assets/images/mask-snow-mustache.jpg" alt="Carlos Eduardo Mendes" loading="lazy">
+          </div>
+          <div class="review-card-body">
+            <div class="review-stars">★★★★★</div>
+            <h3 class="review-card-title">O bigode curvado é sensacional! 🎩❄️</h3>
+            <p class="review-card-text">
+              "Comprei o modelo do bigode retrô imperial e usei na viagem de esqui. O realismo de longe e de perto é impressionante, meus amigos acharam que era meu rosto mesmo! Muito confortável!"
+            </p>
+            <div class="review-author-wrap">
+              <div class="review-user-profile">
+                <img class="review-user-avatar" src="assets/images/user-carlos.jpg" alt="Carlos Eduardo Mendes" style="object-position: center 20%;">
+                <div class="review-user-meta">
+                  <span class="review-user-name">Carlos Eduardo Mendes</span>
+                  <span class="review-user-location">Porto Alegre, RS</span>
+                </div>
+              </div>
+              <span class="verified-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Verificado
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 6: Bebê com chupeta 3D -->
+        <div class="review-card">
+          <div class="review-img-wrap">
+            <span class="review-photo-badge">📷 Foto do Comprador</span>
+            <img class="review-pic" src="assets/images/mask-snow-baby.jpg" alt="Matheus Ribeiro Costa" loading="lazy">
+          </div>
+          <div class="review-card-body">
+            <div class="review-stars">★★★★★</div>
+            <h3 class="review-card-title">A de bebê com chupeta é a mais hilária! 🍼😂</h3>
+            <p class="review-card-text">
+              "Comprei o modelo de bebê com chupeta para zoar na viagem e gravei pro TikTok, bateu mais de 100 mil visualizações no primeiro dia! A chupeta parece 3D de verdade, surreal de bom."
+            </p>
+            <div class="review-author-wrap">
+              <div class="review-user-profile">
+                <img class="review-user-avatar" src="assets/images/user-matheus.png" alt="Matheus Ribeiro Costa" style="object-position: 55% 25%;">
+                <div class="review-user-meta">
+                  <span class="review-user-name">Matheus Ribeiro Costa</span>
+                  <span class="review-user-location">Florianópolis, SC</span>
+                </div>
+              </div>
+              <span class="verified-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Verificado
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 7: Chegou Bem Embalado -->
+        <div class="review-card">
+          <div class="review-img-wrap">
+            <span class="review-photo-badge">📷 Foto do Comprador</span>
+            <img class="review-pic" src="assets/images/review-felipe-masks.jpg" alt="Máscaras balaclava 3D recebidas por Felipe Santos" style="object-position: center 40%;" loading="lazy">
+          </div>
+          <div class="review-card-body">
+            <div class="review-stars">★★★★★</div>
+            <h3 class="review-card-title">Chegou super bem embalado e material de primeira! 📦👌</h3>
+            <p class="review-card-text">
+              "As encomendas chegaram super rápido e vieram muito bem embaladas no pacote! O material da touca é de excelente qualidade, tecido resistente, toque confortável e o realismo das impressões 3D surpreende demais. Valeu muito a pena!"
+            </p>
+            <div class="review-author-wrap">
+              <div class="review-user-profile">
+                <img class="review-user-avatar" src="assets/images/user-felipe.jpg" alt="Felipe Santos" style="object-position: center 25%;">
+                <div class="review-user-meta">
+                  <span class="review-user-name">Felipe Santos</span>
+                  <span class="review-user-location">Brasília, DF</span>
+                </div>
+              </div>
+              <span class="verified-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Verificado
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 8: Amarelo com Língua -->
+        <div class="review-card">
+          <div class="review-img-wrap">
+            <span class="review-photo-badge">📷 Foto do Comprador</span>
+            <img class="review-pic" src="assets/images/mask-yellow-tongue.png" alt="Lucas Teixeira Martins" loading="lazy">
+          </div>
+          <div class="review-card-body">
+            <div class="review-stars">★★★★★</div>
+            <h3 class="review-card-title">A cara debochada é sensacional! 😝😂</h3>
+            <p class="review-card-text">
+              "Essa com a língua pra fora é garantia de risada na certa. Usei num encontro com a galera e foi só zoeira o tempo todo. Tecido macio e respira super bem!"
+            </p>
+            <div class="review-author-wrap">
+              <div class="review-user-profile">
+                <img class="review-user-avatar" src="assets/images/user-lucas.jpg" alt="Lucas Teixeira Martins" style="object-position: center 25%;">
+                <div class="review-user-meta">
+                  <span class="review-user-name">Lucas Teixeira Martins</span>
+                  <span class="review-user-location">Goiânia, GO</span>
+                </div>
+              </div>
+              <span class="verified-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Verificado
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 9: Amarelo Dente de Ouro -->
+        <div class="review-card">
+          <div class="review-img-wrap">
+            <span class="review-photo-badge">📷 Foto do Comprador</span>
+            <img class="review-pic" src="assets/images/mask-yellow-goldtooth.png" alt="Guilherme Rodrigues Souza" loading="lazy">
+          </div>
+          <div class="review-card-body">
+            <div class="review-stars">★★★★★</div>
+            <h3 class="review-card-title">O detalhe do dente de ouro é absurdo! 🤑😎</h3>
+            <p class="review-card-text">
+              "Comprei a versão com dente de ouro e a estampa é muito nítida! Ficou perfeita no rosto, material flexível e de ótima qualidade. Vale cada centavo!"
+            </p>
+            <div class="review-author-wrap">
+              <div class="review-user-profile">
+                <img class="review-user-avatar" src="assets/images/user-guilherme-face.jpg" alt="Guilherme Rodrigues Souza">
+                <div class="review-user-meta">
+                  <span class="review-user-name">Guilherme Rodrigues Souza</span>
+                  <span class="review-user-location">São Paulo, SP</span>
+                </div>
+              </div>
+              <span class="verified-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Verificado
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Bar -->
+  <section class="section-cta">
+    <div class="container cta-inner">
+      <h2>Garanta Seus Combos: Leve 2 por Apenas R$ 29,90</h2>
+      <p>Aproveite nossa condição única: R$ 29,90 por combo (2 máscaras por R$ 14,95 cada) liberado para quantas compras e unidades você quiser com Frete Grátis!</p>
+      <button class="btn-white-cta" onclick="scrollToTop()">
+        GARANTIR COMBOS POR R$ 29,90 CADA
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="contato">
+    <div class="container">
+      <div class="footer-cols">
+        <div>
+          <div style="font-size: 1.55rem; font-weight: 900; letter-spacing: -0.5px; color: #fff; margin-bottom: 12px;">Mascara<span style="color: #ef4444;">3D</span></div>
+          <p>
+            Loja oficial Mascara3D. Produtos originais com qualidade comprovada, entrega rastreada e suporte dedicado.
+          </p>
+        </div>
+
+        <div>
+          <h4>Links Rápidos</h4>
+          <ul class="footer-nav">
+            <li><a href="#produto">Página Inicial</a></li>
+            <li><a href="#detalhes">Políticas de Envio</a></li>
+            <li><a href="#detalhes">Garantia & Reembolso</a></li>
+            <li><a href="#detalhes">Termos de Serviço</a></li>
+            <li><a href="#detalhes">Política de Privacidade</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Atendimento</h4>
+          <p>Precisa de suporte com seu pedido?</p>
+          <p style="margin-top: 8px; color: #fff; font-weight: 600;">contato@mascara3d.com.br</p>
+          <p style="margin-top: 4px;">Atendimento de Seg. a Sex. das 09h às 18h</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 Mascara3D. Todos os direitos reservados.
+        </div>
+        <div style="font-size: 0.8rem; color: #777;">
+          Ambiente seguro criptografado com tecnologia SSL de ponta a ponta.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Drawer -->
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-drawer-panel" id="cartPanel">
+    <div class="drawer-top">
+      <h3>Seu Carrinho (<span id="drawerCount">0</span>)</h3>
+      <button class="close-btn" id="closeDrawerBtn">&times;</button>
+    </div>
+
+    <!-- Free Shipping & Brinde Indicator -->
+    <div class="free-shipping-indicator" id="giftIndicator">
+      <div id="giftIndicatorText">
+        🎁 Compras acima de <strong>R$ 99,90</strong> ganham um <strong>BRINDE EXCLUSIVO</strong>!
+      </div>
+      <div class="bar-line">
+        <div class="bar-fill" id="giftBarFill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div class="drawer-scroll" id="drawerItemsList">
+      <!-- Inserido dinamicamente via JS -->
+    </div>
+
+    <div class="drawer-bottom" id="drawerBottom" style="display: none;">
+      <div class="drawer-total-row">
+        <span>Subtotal:</span>
+        <span id="drawerTotalPrice">R$ 0,00</span>
+      </div>
+      <button class="btn-finish-checkout" id="checkoutBtn" type="button" onclick="goToCheckout()">
+        FINALIZAR COMPRA
+      </button>
+      <div class="timer-badge">
+        ⏳ Frete Grátis e Oferta Reservada
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bar -->
+  <div class="mobile-bar" id="mobileStickyBar">
+    <div class="mobile-bar-info" onclick="scrollToCombo()" style="cursor: pointer;">
+      <span class="mobile-bar-title" id="mobileTitle">Combo 2 Máscaras 3D</span>
+      <span class="mobile-bar-price" id="mobilePrice">R$ 29,90 <span style="font-size: 0.72rem; color: #16a34a; font-weight: 700;">(Frete Grátis)</span></span>
+    </div>
+    <button class="btn-mobile-buy" id="btnMobileBuy" onclick="handleMobileBarClick()">
+      🛒 Adicionar ao Carrinho
+    </button>
+  </div>
+
+  <!-- Live Social Proof Toast -->
+  <div class="social-proof-toast" id="socialProofToast">
+    <img id="toastImg" class="toast-img" src="assets/images/mask-snow-smile.jpg" alt="Mascara3D" onerror="this.src='assets/images/mask-snow-smile.jpg'">
+    <div class="toast-content">
+      <div class="toast-title" id="toastTitle">Lucas F. de Belo Horizonte/MG</div>
+      <div class="toast-subtitle" id="toastSubtitle">Comprou Combo 2x Mascara3D</div>
+      <div class="toast-time" id="toastTime">Há 2 minutos • Compra Verificada</div>
+    </div>
+    <button type="button" class="toast-close" onclick="closeToast()">&times;</button>
+  </div>
+
+  <!-- Script -->
+  <script>
+    // Models Data (Featured Snow Models + Original + AliExpress)
+    const modelsData = [
+      { id: 1, code: 'Mod 01', name: 'Modelo 01 - Sorriso Épico na Neve (Edição Especial)', img: 'assets/images/mask-snow-smile.jpg' },
+      { id: 2, code: 'Mod 02', name: 'Modelo 02 - Bigode Retrô Imperial na Neve', img: 'assets/images/mask-snow-mustache.jpg' },
+      { id: 3, code: 'Mod 03', name: 'Modelo 03 - Bebê Fofo com Chupeta 3D (Viral)', img: 'assets/images/mask-snow-baby.jpg' },
+      { id: 4, code: 'Mod 04', name: 'Modelo 04 - Rosto Original Realista Mascara3D', img: 'assets/images/product-main.png' },
+      { id: 5, code: 'Mod 05', name: 'Modelo 05 - Sorriso Cômico com Dentes', img: 'assets/images/mask-ali-2.jpg' },
+      { id: 6, code: 'Mod 06', name: 'Modelo 06 - Tiozinho Bigode Grisalho', img: 'assets/images/mask-ali-3.jpg' },
+      { id: 7, code: 'Mod 07', name: 'Modelo 07 - Expressão Espanto / Olhar Cômico', img: 'assets/images/mask-ali-4.jpg' },
+      { id: 8, code: 'Mod 08', name: 'Modelo 08 - Velho Careca Rugas Expressivas', img: 'assets/images/mask-ali-5.jpg' },
+      { id: 9, code: 'Mod 09', name: 'Modelo 09 - Senhor Bigode Tradicional', img: 'assets/images/mask-ali-6.jpg' },
+      { id: 10, code: 'Mod 10', name: 'Modelo 10 - Amarelo Gamer Malandro (Edição Cartoon)', img: 'assets/images/mask-yellow-gamer.png' },
+      { id: 11, code: 'Mod 11', name: 'Modelo 11 - Amarelo Debochado com Língua (Edição Gamer)', img: 'assets/images/mask-yellow-tongue.png' },
+      { id: 12, code: 'Mod 12', name: 'Modelo 12 - Amarelo Dente de Ouro (Edição Gamer)', img: 'assets/images/mask-yellow-goldtooth.png' }
+    ];
+
+    let comboSlot = 1; // 1 (1st mask) or 2 (2nd mask)
+    let mask1Index = 0; // Default: Mod 01
+    let mask2Index = 1; // Default: Mod 02
+
+    function switchComboSlot(slot) {
+      comboSlot = slot;
+      const tab1 = document.getElementById('tabMask1');
+      const tab2 = document.getElementById('tabMask2');
+      if (tab1) tab1.classList.toggle('active', slot === 1);
+      if (tab2) tab2.classList.toggle('active', slot === 2);
+
+      const slotInst = document.getElementById('slotInstruction');
+      if (slotInst) {
+        slotInst.innerHTML = slot === 1
+          ? '👉 Clique em um modelo abaixo para definir a <strong>1ª Máscara</strong>:'
+          : '👉 Clique em um modelo abaixo para definir a <strong>2ª Máscara</strong> (GRÁTIS no combo de 2 por R$ 29,90):';
+      }
+
+      updateActiveSwatches();
+      showHeroImage(slot === 1 ? mask1Index : mask2Index);
+    }
+
+    function selectModel(index) {
+      if (index < 0 || index >= modelsData.length) return;
+      if (comboSlot === 1) {
+        mask1Index = index;
+      } else {
+        mask2Index = index;
+      }
+
+      updateComboState();
+      showHeroImage(index);
+    }
+
+    function showHeroImage(index) {
+      const model = modelsData[index];
+      const mainImg = document.getElementById('mainProductImg');
+      if (mainImg) {
+        mainImg.style.opacity = '0.4';
+        setTimeout(() => {
+          mainImg.src = model.img;
+          mainImg.style.opacity = '1';
+        }, 120);
+      }
+    }
+
+    function updateActiveSwatches() {
+      const currentIdx = comboSlot === 1 ? mask1Index : mask2Index;
+      const thumbBtns = document.querySelectorAll('#galleryThumbs .thumb-btn');
+      thumbBtns.forEach((btn, i) => btn.classList.toggle('active', i === currentIdx));
+
+      const swatchBtns = document.querySelectorAll('#modelSwatches .swatch-btn');
+      swatchBtns.forEach((btn, i) => btn.classList.toggle('active', i === currentIdx));
+    }
+
+    function updateComboState() {
+      const m1 = modelsData[mask1Index];
+      const m2 = modelsData[mask2Index];
+
+      // Update previews in combo box
+      const prev1 = document.getElementById('comboPreview1');
+      if (prev1) prev1.src = m1.img;
+      const prev2 = document.getElementById('comboPreview2');
+      if (prev2) prev2.src = m2.img;
+
+      // Update tab buttons
+      const tab1Name = document.getElementById('tabMask1Name');
+      if (tab1Name) tab1Name.textContent = m1.code;
+      const tab2Name = document.getElementById('tabMask2Name');
+      if (tab2Name) tab2Name.textContent = m2.code;
+
+      // Update summary title
+      const sumTitle = document.getElementById('comboSummaryTitle');
+      if (sumTitle) sumTitle.textContent = `Combo: ${m1.code} + ${m2.code}`;
+
+      // Update active swatches
+      updateActiveSwatches();
+    }
+
+    function selectModelAndScroll(index) {
+      selectModel(index);
+      scrollToTop();
+    }
+
+    const pricePerUnit = 29.90;
+    let qty = 1;
+
+    const qtyInput = document.getElementById('qtyInput');
+    const btnMinus = document.getElementById('btnMinus');
+    const btnPlus = document.getElementById('btnPlus');
+    const cartCount = document.getElementById('cartCount');
+    const drawerCount = document.getElementById('drawerCount');
+    const cartPanel = document.getElementById('cartPanel');
+    const cartBackdrop = document.getElementById('cartBackdrop');
+    const openCartBtn = document.getElementById('openCartBtn');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const btnAddToCart = document.getElementById('btnAddToCart');
+    const btnBuyNow = document.getElementById('btnBuyNow');
+
+    function formatBRL(val) {
+      return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function setQty(val) {
+      qty = Math.max(1, val);
+      if (qtyInput) qtyInput.value = qty;
+      const totalUnits = qty * 2;
+      const fmt = formatBRL(qty * pricePerUnit);
+      const qtyUnitsText = document.getElementById('qtyUnitsText');
+      if (qtyUnitsText) {
+        qtyUnitsText.textContent = qty === 1 
+          ? `= 2 Máscaras por R$ 29,90`
+          : `= ${totalUnits} Máscaras (${fmt}) • R$ 29,90 cada combo`;
+      }
+      if (btnBuyNow) {
+        btnBuyNow.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          ${qty === 1 ? 'GARANTIR 2 MÁSCARAS POR R$ 29,90' : `GARANTIR ${totalUnits} MÁSCARAS POR ${fmt}`}
+        `;
+      }
+      if (btnAddToCart) {
+        btnAddToCart.textContent = qty === 1 ? 'Adicionar Combo ao Carrinho' : `Adicionar ${qty} Combos ao Carrinho (${fmt})`;
+      }
+    }
+
+    btnMinus.addEventListener('click', () => setQty(qty - 1));
+    btnPlus.addEventListener('click', () => setQty(qty + 1));
+
+    // Cart System - starts completely EMPTY
+    let cartItems = [];
+
+    try {
+      const saved = JSON.parse(localStorage.getItem('userCart'));
+      if (Array.isArray(saved) && saved.length > 0) {
+        cartItems = saved;
+      }
+    } catch (e) {
+      cartItems = [];
+    }
+
+    function saveCart() {
+      try {
+        localStorage.setItem('userCart', JSON.stringify(cartItems));
+      } catch (e) {}
+      renderCart();
+    }
+
+    function addToCart(openDrawer = true) {
+      const m1 = modelsData[mask1Index];
+      const m2 = modelsData[mask2Index];
+      const quantity = qty;
+
+      const existingIndex = cartItems.findIndex(item => 
+        (item.mask1.id === m1.id && item.mask2.id === m2.id) ||
+        (item.mask1.id === m2.id && item.mask2.id === m1.id)
+      );
+
+      if (existingIndex > -1) {
+        cartItems[existingIndex].qty += quantity;
+      } else {
+        cartItems.push({
+          id: Date.now() + Math.random(),
+          mask1: m1,
+          mask2: m2,
+          qty: quantity,
+          price: pricePerUnit
+        });
+      }
+
+      setQty(1);
+      saveCart();
+
+      if (openDrawer) {
+        openCart();
+      }
+    }
+
+    function changeItemQty(itemId, delta) {
+      const idx = cartItems.findIndex(i => i.id === itemId);
+      if (idx > -1) {
+        cartItems[idx].qty += delta;
+        if (cartItems[idx].qty <= 0) {
+          cartItems.splice(idx, 1);
+        }
+        saveCart();
+      }
+    }
+
+    function removeCartItem(itemId) {
+      cartItems = cartItems.filter(i => i.id !== itemId);
+      saveCart();
+    }
+
+    function getCartSubtotal() {
+      return cartItems.reduce((acc, item) => acc + (item.qty * item.price), 0);
+    }
+
+    function getCartTotalCombos() {
+      return cartItems.reduce((acc, item) => acc + item.qty, 0);
+    }
+
+    function renderCart() {
+      const totalCombos = getCartTotalCombos();
+      const subtotal = getCartSubtotal();
+      const cartCountEl = document.getElementById('cartCount');
+      const drawerCountEl = document.getElementById('drawerCount');
+      const listEl = document.getElementById('drawerItemsList');
+      const bottomEl = document.getElementById('drawerBottom');
+      const giftIndicator = document.getElementById('giftIndicator');
+      const totalPriceEl = document.getElementById('drawerTotalPrice');
+      const mobilePrice = document.getElementById('mobilePrice');
+
+      if (cartCountEl) cartCountEl.textContent = totalCombos;
+      if (drawerCountEl) drawerCountEl.textContent = totalCombos;
+      if (mobilePrice) mobilePrice.textContent = totalCombos > 0 ? formatBRL(subtotal) : 'R$ 29,90';
+
+      if (cartItems.length === 0) {
+        if (listEl) {
+          listEl.innerHTML = `
+            <div style="text-align: center; padding: 45px 15px; color: #64748b;">
+              <div style="font-size: 3.2rem; margin-bottom: 10px;">🛒</div>
+              <h4 style="font-size: 1.15rem; color: #0f172a; margin-bottom: 6px; font-weight: 800;">Seu carrinho está vazio</h4>
+              <p style="font-size: 0.85rem; margin-bottom: 22px; max-width: 260px; margin-left: auto; margin-right: auto;">
+                Aproveite a promoção de 2 por R$ 29,90 e monte seu combo agora!
+              </p>
+              <button type="button" class="btn-checkout" style="padding: 12px 24px; font-size: 0.9rem; max-width: 250px; margin: 0 auto;" onclick="closeCart(); scrollToTop();">
+                👉 Montar Meu Combo
+              </button>
+            </div>
+          `;
+        }
+        if (giftIndicator) {
+          giftIndicator.innerHTML = `
+            <div style="color: #166534; font-size: 0.82rem; font-weight: 700; margin-bottom: 4px;">
+              🎁 Compras acima de <strong>R$ 99,90</strong> ganham um <strong>BRINDE EXCLUSIVO</strong>!
+            </div>
+            <div class="bar-line"><div class="bar-fill" style="width: 0%;"></div></div>
+          `;
+        }
+        if (bottomEl) bottomEl.style.display = 'none';
+        return;
+      }
+
+      if (bottomEl) bottomEl.style.display = 'block';
+
+      // Gift Progress Bar
+      const giftTarget = 99.90;
+      const pct = Math.min(100, Math.round((subtotal / giftTarget) * 100));
+
+      if (giftIndicator) {
+        if (subtotal >= giftTarget) {
+          giftIndicator.innerHTML = `
+            <div style="color: #15803d; font-weight: 800; font-size: 0.82rem; margin-bottom: 4px;">
+              🎉 PARABÉNS! Você ganhou um <strong>BRINDE EXCLUSIVO</strong> no seu pedido!
+            </div>
+            <div class="bar-line"><div class="bar-fill" style="width: 100%; background: #16a34a;"></div></div>
+          `;
+        } else {
+          const diff = (giftTarget - subtotal).toFixed(2).replace('.', ',');
+          giftIndicator.innerHTML = `
+            <div style="color: #0f172a; font-size: 0.82rem; margin-bottom: 4px;">
+              🎁 Adicione mais <strong>R$ ${diff}</strong> para ganhar um <strong>BRINDE EXCLUSIVO</strong>!
+            </div>
+            <div class="bar-line"><div class="bar-fill" style="width: ${pct}%; background: #16a34a;"></div></div>
+          `;
+        }
+      }
+
+      // Render items
+      let html = '';
+      cartItems.forEach(item => {
+        const itemTotal = formatBRL(item.qty * item.price);
+        html += `
+          <div class="drawer-item" style="gap: 12px; position: relative;">
+            <div style="display: flex; gap: 4px; align-items: center; flex-shrink: 0;">
+              <img class="drawer-item-img" src="${item.mask1.img}" alt="1ª Máscara" style="width: 46px; height: 46px; border-radius: 6px; object-fit: cover; border: 1.5px solid #000;">
+              <span style="font-weight: 800; color: #94a3b8;">+</span>
+              <img class="drawer-item-img" src="${item.mask2.img}" alt="2ª Máscara" style="width: 46px; height: 46px; border-radius: 6px; object-fit: cover; border: 1.5px solid #16a34a;">
+            </div>
+            <div class="drawer-item-info">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div style="color: #dc2626; font-size: 0.72rem; font-weight: 800; text-transform: uppercase;">🔥 Promoção: 2 por R$ 29,90</div>
+                <button type="button" onclick="removeCartItem(${item.id})" style="background: none; border: none; color: #94a3b8; cursor: pointer; padding: 2px 4px; font-size: 0.9rem;" title="Remover combo">✕</button>
+              </div>
+              <div class="drawer-item-title" style="font-size: 0.88rem; margin-top: 2px;">Combo 2x Máscara 3D</div>
+              <div style="font-size: 0.78rem; color: #475569; margin-top: 1px;">1ª: ${item.mask1.code} | 2ª: ${item.mask2.code}</div>
+              
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                <div style="display: inline-flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff;">
+                  <button type="button" onclick="changeItemQty(${item.id}, -1)" style="border: none; background: none; padding: 2px 8px; font-weight: 800; cursor: pointer; font-size: 0.9rem;">-</button>
+                  <span style="font-weight: 800; font-size: 0.85rem; padding: 0 4px; min-width: 20px; text-align: center;">${item.qty}</span>
+                  <button type="button" onclick="changeItemQty(${item.id}, 1)" style="border: none; background: none; padding: 2px 8px; font-weight: 800; cursor: pointer; font-size: 0.9rem;">+</button>
+                </div>
+                <div style="font-weight: 900; font-size: 0.98rem; color: #0f172a;">${itemTotal}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      // If >= 99.90, add the FREE GIFT item!
+      if (subtotal >= giftTarget) {
+        html += `
+          <div class="drawer-item" style="background: #f0fdf4; border: 1.5px dashed #86efac; border-radius: 10px; padding: 12px; margin-top: 12px; display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 2rem;">🎁</div>
+            <div style="flex: 1;">
+              <div style="font-weight: 800; font-size: 0.88rem; color: #166534;">Brinde Especial Exclusivo Mascara3D</div>
+              <div style="font-size: 0.76rem; color: #15803d;">Presente surpresa adicionado ao seu pacote!</div>
+            </div>
+            <span style="font-weight: 900; color: #16a34a; font-size: 0.8rem; background: #dcfce7; padding: 3px 8px; border-radius: 12px; border: 1px solid #86efac;">GRÁTIS</span>
+          </div>
+        `;
+      }
+
+      listEl.innerHTML = html;
+      if (totalPriceEl) totalPriceEl.textContent = formatBRL(subtotal);
+      updateMobileBar();
+    }
+
+    function goToCheckout() {
+      if (cartItems.length === 0) {
+        addToCart(false);
+      }
+      localStorage.setItem('checkoutCart', JSON.stringify(cartItems));
+      window.location.href = '/checkout.html';
+    }
+
+    // Initialize on load
+    updateComboState();
+    renderCart();
+
+    function handleMobileBarClick() {
+      if (cartItems.length > 0) {
+        goToCheckout();
+      } else {
+        addToCart(true);
+      }
+    }
+
+    function updateMobileBar() {
+      const btn = document.getElementById('btnMobileBuy');
+      if (!btn) return;
+      if (cartItems.length > 0) {
+        btn.innerHTML = '⚡ Finalizar Compra';
+        btn.style.background = '#16a34a';
+      } else {
+        btn.innerHTML = '🛒 Adicionar ao Carrinho';
+        btn.style.background = '#16a34a';
+      }
+    }
+
+    function openCart() {
+      cartPanel.classList.add('open');
+      cartBackdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      const mBar = document.getElementById('mobileStickyBar');
+      if (mBar) mBar.style.display = 'none';
+      const toast = document.getElementById('socialProofToast');
+      if (toast) toast.classList.remove('visible');
+    }
+
+    function closeCart() {
+      cartPanel.classList.remove('open');
+      cartBackdrop.classList.remove('open');
+      document.body.style.overflow = '';
+      const mBar = document.getElementById('mobileStickyBar');
+      if (mBar && window.innerWidth <= 900) mBar.style.display = 'flex';
+      updateMobileBar();
+    }
+
+    openCartBtn.addEventListener('click', openCart);
+    closeDrawerBtn.addEventListener('click', closeCart);
+    cartBackdrop.addEventListener('click', closeCart);
+    btnAddToCart.addEventListener('click', () => addToCart(true));
+    btnBuyNow.addEventListener('click', () => { addToCart(false); goToCheckout(); });
+
+    function scrollToTop() {
+      document.getElementById('produto').scrollIntoView({ behavior: 'smooth' });
+    }
+    function scrollToCombo() {
+      scrollToTop();
+    }
+
+    // Mini Review Carousel
+    let activeSlide = 0;
+    const slides = [
+      document.getElementById('revSlide1'),
+      document.getElementById('revSlide2'),
+      document.getElementById('revSlide3')
+    ];
+    const dots = document.querySelectorAll('.nav-dot');
+
+    function setRevSlide(idx) {
+      activeSlide = idx;
+      slides.forEach((s, i) => {
+        if (s) s.classList.toggle('active', i === idx);
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+    }
+
+    // Auto rotate review carousel
+    setInterval(() => {
+      activeSlide = (activeSlide + 1) % slides.length;
+      setRevSlide(activeSlide);
+    }, 4500);
+
+    // Accordions
+    document.querySelectorAll('.accordion-card').forEach(card => {
+      card.querySelector('.accordion-btn').addEventListener('click', () => {
+        const isOpen = card.classList.contains('open');
+        document.querySelectorAll('.accordion-card').forEach(c => c.classList.remove('open'));
+        if (!isOpen) card.classList.add('open');
+      });
+    });
+
+    // Countdown Timer
+    let secondsLeft = 590;
+    const timerElem = document.getElementById('countdown');
+    setInterval(() => {
+      if (secondsLeft > 0) secondsLeft--;
+      else secondsLeft = 600;
+      const m = Math.floor(secondsLeft / 60);
+      const s = secondsLeft % 60;
+      timerElem.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }, 1000);
+
+    // Shipping Simulator CEP Mask & Calculation
+    const cepInput = document.getElementById('cepInput');
+    if (cepInput) {
+      cepInput.addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length > 5) v = v.substring(0, 5) + '-' + v.substring(5, 8);
+        e.target.value = v;
+      });
+      cepInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') calculateShipping();
+      });
+    }
+
+    function calculateShipping() {
+      const input = document.getElementById('cepInput');
+      const res = document.getElementById('shippingResult');
+      if (!input || !res) return;
+      const cleanCep = input.value.replace(/\D/g, '');
+      if (cleanCep.length < 8) {
+        alert('Por favor, digite um CEP válido com 8 dígitos.');
+        input.focus();
+        return;
+      }
+      res.style.display = 'block';
+      res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Live Visitor Counter Dynamic Oscillation
+    const visitorElem = document.getElementById('liveVisitorCount');
+    if (visitorElem) {
+      let currentVisitors = 47;
+      setInterval(() => {
+        const delta = Math.floor(Math.random() * 5) - 2;
+        currentVisitors = Math.min(58, Math.max(39, currentVisitors + delta));
+        visitorElem.textContent = currentVisitors;
+      }, 6500);
+    }
+
+    // Social Proof Toast Notification System
+    const socialToast = document.getElementById('socialProofToast');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastSubtitle = document.getElementById('toastSubtitle');
+    const toastTime = document.getElementById('toastTime');
+    const toastImg = document.getElementById('toastImg');
+
+    const recentBuyers = [
+      { name: 'Lucas F.', city: 'Belo Horizonte/MG', combo: 'Combo 2x Balaclava 3D', time: 'Há 2 minutos', img: 'assets/images/mask-snow-smile.jpg' },
+      { name: 'Felipe S.', city: 'São Paulo/SP', combo: 'Combo 4x Balaclava 3D (Ganhou Brinde)', time: 'Há 4 minutos', img: 'assets/images/mask-snow-mustache.jpg' },
+      { name: 'Matheus C.', city: 'Rio de Janeiro/RJ', combo: 'Combo 2x Balaclava 3D', time: 'Há 7 minutos', img: 'assets/images/mask-snow-baby.jpg' },
+      { name: 'Bruno H.', city: 'Curitiba/PR', combo: 'Combo 6x Balaclava 3D (Frete Expresso)', time: 'Há 11 minutos', img: 'assets/images/product-main.png' },
+      { name: 'Rodrigo M.', city: 'Campinas/SP', combo: 'Combo 2x Balaclava 3D', time: 'Há 15 minutos', img: 'assets/images/mask-ali-2.jpg' },
+      { name: 'Gabriel P.', city: 'Porto Alegre/RS', combo: 'Combo 2x Balaclava 3D', time: 'Há 18 minutos', img: 'assets/images/mask-snow-beardgoggles.jpg' }
+    ];
+
+    let buyerIdx = 0;
+    let toastTimeout = null;
+
+    function showNextToast() {
+      if (!socialToast || !toastTitle || !toastSubtitle || !toastTime || !toastImg) return;
+      // Do not display toast when cart is open
+      const cartPanel = document.getElementById('cartDrawerPanel');
+      if (cartPanel && cartPanel.classList.contains('open')) return;
+
+      const b = recentBuyers[buyerIdx];
+      toastTitle.textContent = `${b.name} de ${b.city}`;
+      toastSubtitle.textContent = `Comprou ${b.combo}`;
+      toastTime.textContent = `${b.time} • Compra Verificada`;
+      toastImg.src = b.img;
+
+      socialToast.classList.add('visible');
+
+      toastTimeout = setTimeout(() => {
+        socialToast.classList.remove('visible');
+      }, 5500);
+
+      buyerIdx = (buyerIdx + 1) % recentBuyers.length;
+    }
+
+    function closeToast() {
+      if (socialToast) socialToast.classList.remove('visible');
+      if (toastTimeout) clearTimeout(toastTimeout);
+    }
+
+    // Start toast loop after 3.5s
+    setTimeout(() => {
+      showNextToast();
+      setInterval(showNextToast, 12000);
+    }, 3500);
+  </script>
+</body>
+</html>

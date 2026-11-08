@@ -1,0 +1,18 @@
+node_modules/
+.DS_Store
+*.log
+*.tmp
+extracted_text.txt
+*.ps1
+
+# Temporary scraper and extraction files
+ali_*
+clean_page.html
+page.html
+section_*
+header.html
+footer.html
+root_vars.css
+runParams.json
+*.js
+!server.js
