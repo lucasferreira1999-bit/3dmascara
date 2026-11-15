@@ -342,10 +342,6 @@
             <span>Boleto Bancário</span>
           </div>
 
-          <div id="pixDetails" style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; font-size: 0.9rem; margin-top: 15px;">
-            ⚡ O código PIX Copia & Cola e o QR Code serão gerados imediatamente pela <strong>FreePay</strong> com aprovação instantânea!
-          </div>
-
           <button class="btn-pay" id="btnPay" onclick="handlePay()">
             CONCLUIR PEDIDO AGORA (R$ 29,90)
           </button>
@@ -543,13 +539,13 @@
       const pixDetails = document.getElementById('pixDetails');
       if (type === 'pix') {
         document.getElementById('optPix').classList.add('active');
-        pixDetails.style.display = 'block';
+        if (pixDetails) pixDetails.style.display = 'block';
       } else if (type === 'card') {
         document.getElementById('optCard').classList.add('active');
-        pixDetails.style.display = 'none';
+        if (pixDetails) pixDetails.style.display = 'none';
       } else {
         document.getElementById('optBoleto').classList.add('active');
-        pixDetails.style.display = 'none';
+        if (pixDetails) pixDetails.style.display = 'none';
       }
     }
 
@@ -630,7 +626,7 @@
 
       const btnPay = document.getElementById('btnPay');
       btnPay.disabled = true;
-      btnPay.textContent = '⚡ Conectando à Gateway FreePay...';
+      btnPay.textContent = '⏳ Gerando pagamento...';
 
       const amountCents = Math.round(subtotal * 100);
 
@@ -683,11 +679,11 @@
         }
 
         // Se a gateway FreePay retornou erro:
-        let errMsg = data.error || 'A gateway FreePay não conseguiu processar o PIX no momento.';
+        let errMsg = data.error || 'Não foi possível processar o PIX no momento.';
         if (errMsg.includes('adquirentes') || errMsg.includes('502')) {
-          errMsg = 'A FreePay está rejeitando a transação na adquirente bancária (Erro 502 da Adquirente). Verifique se a sua adquirente está ativa no painel da FreePay ou se você está usando um CPF diferente do dono da conta.';
+          errMsg = 'A adquirente bancária rejeitou a transação (Erro 502). Verifique se a sua conta está ativa ou use outro CPF.';
         }
-        alert('Aviso da Gateway FreePay: ' + errMsg);
+        alert('Aviso: ' + errMsg);
         btnPay.disabled = false;
         btnPay.textContent = `CONCLUIR PEDIDO AGORA (${formatBRL(subtotal)})`;
 

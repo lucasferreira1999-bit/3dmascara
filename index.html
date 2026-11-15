@@ -3156,7 +3156,7 @@
   <div class="social-proof-toast" id="socialProofToast">
     <img id="toastImg" class="toast-img" src="assets/images/mask-snow-smile.jpg" alt="Mascara3D" onerror="this.src='assets/images/mask-snow-smile.jpg'">
     <div class="toast-content">
-      <div class="toast-title" id="toastTitle">Lucas F. de Belo Horizonte/MG</div>
+      <div class="toast-title" id="toastTitle">Lucas F.</div>
       <div class="toast-subtitle" id="toastSubtitle">Comprou Combo 2x Mascara3D</div>
       <div class="toast-time" id="toastTime">Há 2 minutos • Compra Verificada</div>
     </div>
@@ -3714,7 +3714,7 @@
       if (cartPanel && cartPanel.classList.contains('open')) return;
 
       const b = recentBuyers[buyerIdx];
-      toastTitle.textContent = `${b.name} de ${b.city}`;
+      toastTitle.textContent = b.name;
       toastSubtitle.textContent = `Comprou ${b.combo}`;
       toastTime.textContent = `${b.time} • Compra Verificada`;
       toastImg.src = b.img;
